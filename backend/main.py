@@ -312,3 +312,4 @@ def index_info():
                 "size_bytes": info["indices"][INDEX]["total"]["store"]["size_in_bytes"]}
     except Exception as e:
         return {"status": "error", "message": str(e)}
+//
