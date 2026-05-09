@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-6-0",
+        "name": "Cybersecurity",
+        "desc": "is essential for healthcare"
+    },
+    {
+        "id": "P-6-1",
+        "name": "Blockchain",
+        "desc": "is transforming retrieval systems"
+    },
+    {
+        "id": "P-6-2",
+        "name": "Machine Learning",
+        "desc": "improves efficiency in education"
+    },
+    {
+        "id": "P-6-3",
+        "name": "Cloud Computing",
+        "desc": "improves efficiency in modern software development"
+    },
+    {
+        "id": "P-6-4",
+        "name": "Blockchain",
+        "desc": "is the future of finance"
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-2-0",
+        "name": "Blockchain",
+        "desc": "improves efficiency in healthcare"
+    },
+    {
+        "id": "P-2-1",
+        "name": "Artificial Intelligence",
+        "desc": "is the future of finance"
+    },
+    {
+        "id": "P-2-2",
+        "name": "Data Science",
+        "desc": "is transforming finance"
+    },
+    {
+        "id": "P-2-3",
+        "name": "Data Science",
+        "desc": "is the future of retrieval systems"
+    },
+    {
+        "id": "P-2-4",
+        "name": "Data Science",
+        "desc": "is the future of retrieval systems"
+    }
+]

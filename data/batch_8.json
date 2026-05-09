@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-8-0",
+        "name": "Cloud Computing",
+        "desc": "is essential for retrieval systems"
+    },
+    {
+        "id": "P-8-1",
+        "name": "Machine Learning",
+        "desc": "improves efficiency in modern software development"
+    },
+    {
+        "id": "P-8-2",
+        "name": "Machine Learning",
+        "desc": "improves efficiency in retrieval systems"
+    },
+    {
+        "id": "P-8-3",
+        "name": "Cybersecurity",
+        "desc": "is essential for retrieval systems"
+    },
+    {
+        "id": "P-8-4",
+        "name": "Blockchain",
+        "desc": "is the future of finance"
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-1-0",
+        "name": "Artificial Intelligence",
+        "desc": "is the future of modern software development"
+    },
+    {
+        "id": "P-1-1",
+        "name": "Machine Learning",
+        "desc": "is the future of healthcare"
+    },
+    {
+        "id": "P-1-2",
+        "name": "Data Science",
+        "desc": "is transforming finance"
+    },
+    {
+        "id": "P-1-3",
+        "name": "Blockchain",
+        "desc": "improves efficiency in healthcare"
+    },
+    {
+        "id": "P-1-4",
+        "name": "Cybersecurity",
+        "desc": "is the future of finance"
+    }
+]

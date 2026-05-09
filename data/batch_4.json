@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-4-0",
+        "name": "Artificial Intelligence",
+        "desc": "is essential for finance"
+    },
+    {
+        "id": "P-4-1",
+        "name": "Blockchain",
+        "desc": "improves efficiency in modern software development"
+    },
+    {
+        "id": "P-4-2",
+        "name": "Machine Learning",
+        "desc": "improves efficiency in retrieval systems"
+    },
+    {
+        "id": "P-4-3",
+        "name": "Blockchain",
+        "desc": "is essential for modern software development"
+    },
+    {
+        "id": "P-4-4",
+        "name": "Artificial Intelligence",
+        "desc": "is the future of finance"
+    }
+]

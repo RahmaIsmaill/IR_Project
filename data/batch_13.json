@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-13-0",
+        "name": "Artificial Intelligence",
+        "desc": "improves efficiency in education"
+    },
+    {
+        "id": "P-13-1",
+        "name": "Cybersecurity",
+        "desc": "is the future of retrieval systems"
+    },
+    {
+        "id": "P-13-2",
+        "name": "Blockchain",
+        "desc": "improves efficiency in modern software development"
+    },
+    {
+        "id": "P-13-3",
+        "name": "Data Science",
+        "desc": "is transforming modern software development"
+    },
+    {
+        "id": "P-13-4",
+        "name": "Blockchain",
+        "desc": "is essential for retrieval systems"
+    }
+]

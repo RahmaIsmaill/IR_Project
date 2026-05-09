@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-9-0",
+        "name": "Data Science",
+        "desc": "is essential for modern software development"
+    },
+    {
+        "id": "P-9-1",
+        "name": "Machine Learning",
+        "desc": "is transforming education"
+    },
+    {
+        "id": "P-9-2",
+        "name": "Cloud Computing",
+        "desc": "is essential for retrieval systems"
+    },
+    {
+        "id": "P-9-3",
+        "name": "Blockchain",
+        "desc": "is the future of education"
+    },
+    {
+        "id": "P-9-4",
+        "name": "Blockchain",
+        "desc": "is transforming healthcare"
+    }
+]

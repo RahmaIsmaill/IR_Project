@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-11-0",
+        "name": "Data Science",
+        "desc": "is the future of retrieval systems"
+    },
+    {
+        "id": "P-11-1",
+        "name": "Cloud Computing",
+        "desc": "is transforming retrieval systems"
+    },
+    {
+        "id": "P-11-2",
+        "name": "Cybersecurity",
+        "desc": "is essential for modern software development"
+    },
+    {
+        "id": "P-11-3",
+        "name": "Cybersecurity",
+        "desc": "is transforming finance"
+    },
+    {
+        "id": "P-11-4",
+        "name": "Data Science",
+        "desc": "is transforming retrieval systems"
+    }
+]

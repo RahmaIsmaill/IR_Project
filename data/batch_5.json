@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-5-0",
+        "name": "Artificial Intelligence",
+        "desc": "is transforming finance"
+    },
+    {
+        "id": "P-5-1",
+        "name": "Blockchain",
+        "desc": "is essential for finance"
+    },
+    {
+        "id": "P-5-2",
+        "name": "Cloud Computing",
+        "desc": "is transforming education"
+    },
+    {
+        "id": "P-5-3",
+        "name": "Blockchain",
+        "desc": "is the future of finance"
+    },
+    {
+        "id": "P-5-4",
+        "name": "Data Science",
+        "desc": "is essential for retrieval systems"
+    }
+]

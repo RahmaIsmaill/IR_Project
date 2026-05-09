@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-16-0",
+        "name": "Cloud Computing",
+        "desc": "is the future of modern software development"
+    },
+    {
+        "id": "P-16-1",
+        "name": "Machine Learning",
+        "desc": "is the future of modern software development"
+    },
+    {
+        "id": "P-16-2",
+        "name": "Blockchain",
+        "desc": "is transforming healthcare"
+    },
+    {
+        "id": "P-16-3",
+        "name": "Cloud Computing",
+        "desc": "is essential for education"
+    },
+    {
+        "id": "P-16-4",
+        "name": "Artificial Intelligence",
+        "desc": "is transforming healthcare"
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-3-0",
+        "name": "Blockchain",
+        "desc": "is transforming retrieval systems"
+    },
+    {
+        "id": "P-3-1",
+        "name": "Machine Learning",
+        "desc": "is transforming finance"
+    },
+    {
+        "id": "P-3-2",
+        "name": "Artificial Intelligence",
+        "desc": "is transforming retrieval systems"
+    },
+    {
+        "id": "P-3-3",
+        "name": "Cloud Computing",
+        "desc": "is transforming healthcare"
+    },
+    {
+        "id": "P-3-4",
+        "name": "Blockchain",
+        "desc": "is the future of finance"
+    }
+]

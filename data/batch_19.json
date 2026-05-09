@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-19-0",
+        "name": "Data Science",
+        "desc": "is the future of healthcare"
+    },
+    {
+        "id": "P-19-1",
+        "name": "Machine Learning",
+        "desc": "is essential for retrieval systems"
+    },
+    {
+        "id": "P-19-2",
+        "name": "Blockchain",
+        "desc": "is the future of modern software development"
+    },
+    {
+        "id": "P-19-3",
+        "name": "Data Science",
+        "desc": "is transforming retrieval systems"
+    },
+    {
+        "id": "P-19-4",
+        "name": "Blockchain",
+        "desc": "is transforming healthcare"
+    }
+]

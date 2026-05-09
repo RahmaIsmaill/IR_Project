@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-18-0",
+        "name": "Cybersecurity",
+        "desc": "improves efficiency in retrieval systems"
+    },
+    {
+        "id": "P-18-1",
+        "name": "Data Science",
+        "desc": "improves efficiency in education"
+    },
+    {
+        "id": "P-18-2",
+        "name": "Artificial Intelligence",
+        "desc": "is essential for finance"
+    },
+    {
+        "id": "P-18-3",
+        "name": "Artificial Intelligence",
+        "desc": "improves efficiency in healthcare"
+    },
+    {
+        "id": "P-18-4",
+        "name": "Machine Learning",
+        "desc": "is transforming education"
+    }
+]

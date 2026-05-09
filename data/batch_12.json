@@ -1,0 +1,27 @@
+[
+    {
+        "id": "P-12-0",
+        "name": "Cybersecurity",
+        "desc": "is transforming education"
+    },
+    {
+        "id": "P-12-1",
+        "name": "Cloud Computing",
+        "desc": "improves efficiency in finance"
+    },
+    {
+        "id": "P-12-2",
+        "name": "Cybersecurity",
+        "desc": "is the future of finance"
+    },
+    {
+        "id": "P-12-3",
+        "name": "Artificial Intelligence",
+        "desc": "is the future of education"
+    },
+    {
+        "id": "P-12-4",
+        "name": "Cloud Computing",
+        "desc": "improves efficiency in retrieval systems"
+    }
+]
