@@ -317,6 +317,7 @@ def stats():
                     if w not in STOP and not re.match(r"^user_?\d+$", w):
                         freq[w] = freq.get(w, 0) + 1
 
+
             top_terms = [
                 {"term": w, "count": c}
                 for w, c in sorted(freq.items(), key=lambda x: -x[1])[:10]
