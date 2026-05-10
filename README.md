@@ -21,17 +21,20 @@ This project implements a comprehensive Information Retrieval system combining P
 
 ## Project Structure
 
-```
+```bash
 IR_Project/
-├── README.md
-├── requirements.txt
-├── app.py                 # Main Python backend
-├── templates/             # HTML templates
-│   ├── index.html
-│   ├── results.html
-│   └── ...
-├── static/                # CSS, JavaScript assets
-└── data/                  # Document collections
+├── backend/                     # Python backend
+│   ├── main.py                  # Main application file
+│   ├── requirements.txt         # Python dependencies
+│   └── __pycache__/             # Compiled Python files
+│
+├── frontend/                    # Frontend files
+│   └── index.html               # Main frontend page
+│
+├── data/                        # Document collections / datasets
+│
+├── README.md                    # Project documentation
+└── docker-compose.yml           # Docker configuration
 ```
 
 ## Getting Started
