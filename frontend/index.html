@@ -1,571 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MESH GOOGLE</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --ink:#0a0a08;
-  --paper:#f5f0e8;
-  --paper2:#ede8dc;
-  --paper3:#e4ddd0;
-  --rule:#c8bfad;
-  --rule2:#a89e8c;
-  --red:#c0392b;
-  --red2:#e74c3c;
-  --teal:#1a6b6b;
-  --teal2:#22a89a;
-  --gold:#8b6914;
-  --gold2:#c9951a;
-  --ink2:#3d3830;
-  --ink3:#6b6258;
-  --mark-bg:#fff3cd;
-  --mark:#8b6914;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{font-size:16px}
-body{
-  background:var(--paper);
-  color:var(--ink);
-  font-family:'DM Sans',sans-serif;
-  min-height:100vh;
-  line-height:1.6;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MESH GOOGLE</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+   :root {
+  --ink: #1c1c1a;
+  --paper: #f7f4ef;
+  --paper2: #ffffff;
+  --paper3: #ece7df;
+
+  --rule: #ded6c8;
+  --rule2: #bdb3a3;
+
+  --red: #e06c75;
+  --red2: #ff7b86;
+
+  --teal: #4aa6a1;
+  --teal2: #66c7c1;
+
+  --gold: #c8a96a;
+  --gold2: #e2c07b;
+
+  --ink2: #3a3833;
+  --ink3: #6f6a63;
+
+  --mark-bg: #fff6d8;
+  --mark: #9c7a2b;
+
+  --shadow: rgba(0,0,0,0.06);
 }
 
-/* NOISE TEXTURE */
-body::after{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:9999;opacity:.6;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
 
-/* HEADER */
-header{
-  border-bottom:2px solid var(--ink);
-  padding:0 48px;
-  height:60px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:var(--paper);
-  position:sticky;top:0;z-index:100;
-}
-.logo{
-  font-family:'Instrument Serif',serif;
-  font-size:26px;letter-spacing:-.5px;color:var(--ink);
-  display:flex;align-items:center;gap:10px;
-}
-.logo-mark{
-  width:10px;height:10px;
-  background:var(--red);
-  border-radius:50%;
-  animation:blink 3s ease-in-out infinite;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.status-pill{
-  display:flex;align-items:center;gap:8px;
-  font-family:'DM Mono',monospace;font-size:11px;
-  color:var(--ink3);
-  border:1px solid var(--rule);
-  padding:5px 12px;border-radius:2px;
-  background:var(--paper2);
-}
-.led{width:6px;height:6px;border-radius:50%;background:var(--rule2)}
-.led.on{background:var(--teal);box-shadow:0 0 6px var(--teal2)}
+    html {
+      font-size: 16px
+    }
 
-/* NAV */
-.nav{
-  border-bottom:1px solid var(--rule);
-  background:var(--paper2);
-  padding:0 48px;
-  display:flex;gap:0;
-}
-.nav-item{
-  padding:14px 24px;
-  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;
-  color:var(--ink3);cursor:pointer;
-  border-bottom:2px solid transparent;
-  margin-bottom:-1px;
-  transition:all .15s;
-}
-.nav-item:hover{color:var(--ink)}
-.nav-item.active{color:var(--ink);border-bottom-color:var(--ink)}
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
 
-/* LAYOUT */
-.wrap{max-width:1140px;margin:0 auto;padding:48px 48px}
-.panel{display:none}.panel.active{display:block}
+    /* NOISE TEXTURE */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: .6;
+    }
 
-/* BUILDER */
-.section-head{
-  display:flex;align-items:baseline;gap:16px;
-  margin-bottom:32px;
-  padding-bottom:16px;
-  border-bottom:1px solid var(--rule);
-}
-.section-title{
-  font-family:'Instrument Serif',serif;
-  font-size:32px;color:var(--ink);
-}
-.section-sub{
-  font-family:'DM Mono',monospace;font-size:11px;
-  color:var(--ink3);letter-spacing:1px;
-}
+    /* HEADER */
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding: 0 48px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--paper);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
 
-.format-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px}
-.fmt-card{
-  border:1px solid var(--rule);
-  border-radius:2px;
-  padding:20px 16px;
-  text-align:center;cursor:pointer;
-  background:var(--paper2);
-  transition:all .15s;
-  user-select:none;
-}
-.fmt-card:hover{border-color:var(--ink2)}
-.fmt-card.on{
-  border:2px solid var(--ink);
-  background:var(--ink);
-  color:var(--paper);
-}
-.fmt-card.on .fmt-name{color:var(--paper)}
-.fmt-card.on .fmt-ext{color:var(--paper3)}
-.fmt-ext{
-  font-family:'DM Mono',monospace;font-size:22px;font-weight:500;
-  color:var(--ink2);margin-bottom:6px;
-}
-.fmt-name{font-size:11px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px;
+      letter-spacing: -.5px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-.action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:0}
-.btn{
-  padding:10px 24px;border:1px solid var(--ink);border-radius:2px;
-  cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;
-  font-weight:500;letter-spacing:2px;text-transform:uppercase;
-  transition:all .15s;
-}
-.btn-solid{background:var(--ink);color:var(--paper)}
-.btn-solid:hover{background:var(--ink2)}
-.btn-outline{background:transparent;color:var(--ink)}
-.btn-outline:hover{background:var(--paper2)}
-.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
-.btn-red:hover{background:var(--red2);border-color:var(--red2)}
-.build-status{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3)}
+    .logo-mark {
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: blink 3s ease-in-out infinite;
+    }
 
-.log-box{
-  margin-top:20px;border:1px solid var(--rule);border-radius:2px;
-  background:var(--ink);color:#a8c96e;
-  font-family:'DM Mono',monospace;font-size:12px;line-height:2;
-  padding:20px 24px;display:none;min-height:80px;
-}
-.log-box.show{display:block}
-.log-ln{animation:slideIn .2s ease}
-@keyframes slideIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+    @keyframes blink {
 
-.summary-box{
-  margin-top:16px;border:1px solid var(--rule);border-radius:2px;
-  padding:24px;background:var(--paper2);
-}
-.summary-title{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
-  color:var(--ink3);text-transform:uppercase;margin-bottom:16px;
-}
-.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.summary-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--ink3);margin-bottom:6px;text-transform:uppercase}
-.summary-val{font-family:'Instrument Serif',serif;font-size:28px;color:var(--ink)}
-.summary-list{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink2);line-height:2}
+      0%,
+      100% {
+        opacity: 1
+      }
 
-/* SEARCH */
-.search-wrap{margin-bottom:32px}
-.search-eyebrow{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
-  color:var(--ink3);text-transform:uppercase;margin-bottom:10px;
-}
-.search-field{
-  display:flex;border:2px solid var(--ink);border-radius:2px;overflow:hidden;
-}
-.search-field:focus-within{outline:3px solid var(--teal2);outline-offset:2px}
-.search-inp{
-  flex:1;border:none;background:transparent;
-  color:var(--ink);padding:16px 20px;
-  font-family:'DM Sans',sans-serif;font-size:16px;outline:none;
-}
-.search-inp::placeholder{color:var(--rule2)}
-.search-clear{
-  background:transparent;border:none;border-left:1px solid var(--rule);
-  padding:0 16px;cursor:pointer;color:var(--ink3);font-size:18px;
-  transition:color .1s;
-}
-.search-clear:hover{color:var(--red)}
-.search-go{
-  background:var(--ink);color:var(--paper);border:none;
-  padding:0 28px;cursor:pointer;
-  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
-  letter-spacing:2px;text-transform:uppercase;transition:background .15s;
-}
-.search-go:hover{background:var(--ink2)}
+      50% {
+        opacity: .3
+      }
+    }
 
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
-.chip{
-  padding:5px 12px;border:1px solid var(--rule);border-radius:2px;
-  font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);
-  cursor:pointer;background:var(--paper2);transition:all .1s;
-}
-.chip:hover{border-color:var(--ink);color:var(--ink)}
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      border: 1px solid var(--rule);
+      padding: 5px 12px;
+      border-radius: 2px;
+      background: var(--paper2);
+    }
 
-.filters{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;
-  padding-top:16px;border-top:1px solid var(--rule);
-}
-.flt label{
-  display:block;font-family:'DM Mono',monospace;font-size:10px;
-  letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:5px;
-}
-.flt select,.flt input{
-  width:100%;border:1px solid var(--rule);border-radius:2px;
-  background:var(--paper2);color:var(--ink);
-  padding:8px 12px;font-family:'DM Mono',monospace;font-size:12px;
-  outline:none;transition:border .1s;appearance:none;
-}
-.flt select:focus,.flt input:focus{border-color:var(--ink)}
+    .led {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--rule2)
+    }
 
-/* RESULTS */
-#resultsArea{margin-top:36px}
-.res-header{
-  display:flex;align-items:baseline;justify-content:space-between;
-  margin-bottom:20px;padding-bottom:12px;
-  border-bottom:1px solid var(--rule);
-}
-.res-count{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink3)}
-.res-count strong{
-  font-family:'Instrument Serif',serif;font-size:28px;
-  color:var(--ink);font-weight:400;margin-right:4px;
-}
-.res-page{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3)}
+    .led.on {
+      background: var(--teal);
+      box-shadow: 0 0 6px var(--teal2)
+    }
 
-.dym{
-  border-left:3px solid var(--gold);
-  padding:12px 16px;margin-bottom:20px;
-  background:var(--mark-bg);
-  font-size:14px;font-family:'DM Mono',monospace;
-}
-.dym a{color:var(--gold);cursor:pointer;font-weight:500}
-.dym a:hover{text-decoration:underline}
+    /* NAV */
+    .nav {
+      border-bottom: 1px solid var(--rule);
+      background: var(--paper2);
+      padding: 0 48px;
+      display: flex;
+      gap: 0;
+    }
 
-.no-res{
-  text-align:center;padding:80px 20px;
-  border:1px dashed var(--rule2);border-radius:2px;
-}
-.no-res-icon{font-family:'Instrument Serif',serif;font-size:64px;color:var(--rule2);margin-bottom:12px}
-.no-res h3{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;margin-bottom:8px}
-.no-res p{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink3)}
+    .nav-item {
+      padding: 14px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--ink3);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all .15s;
+    }
 
-.card{
-  border:1px solid var(--rule);border-radius:2px;
-  padding:24px;margin-bottom:10px;
-  background:var(--paper);
-  transition:all .15s;
-  position:relative;
-}
-.card::before{
-  content:'';position:absolute;
-  left:0;top:4px;bottom:4px;width:2px;
-  background:var(--teal);opacity:0;
-  transition:opacity .15s;
-}
-.card:hover{border-color:var(--rule2);background:var(--paper2)}
-.card:hover::before{opacity:1}
-.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px}
-.card-title{
-  font-family:'Instrument Serif',serif;font-size:20px;font-weight:400;line-height:1.2;
-}
-.card-title mark{background:var(--mark-bg);color:var(--mark);padding:0 2px}
-.card-score{
-  font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);
-  border:1px solid var(--rule);padding:3px 10px;border-radius:2px;
-  white-space:nowrap;flex-shrink:0;background:var(--paper2);
-}
-.card-desc{
-  font-size:13px;color:var(--ink3);line-height:1.7;margin-bottom:14px;
-}
-.card-desc mark{background:var(--mark-bg);color:var(--mark);padding:0 2px}
-.card-meta{display:flex;flex-wrap:wrap;gap:6px}
-.tag{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;
-  padding:3px 10px;border-radius:2px;border:1px solid var(--rule);
-  color:var(--ink3);background:var(--paper2);
-}
-.tag-price{color:var(--teal);border-color:var(--teal2);background:rgba(26,107,107,.05)}
-.tag-cat{color:var(--ink);border-color:var(--rule2);font-weight:500}
-.tag-brand{color:var(--gold);border-color:var(--gold2);background:rgba(139,105,20,.04)}
+    .nav-item:hover {
+      color: var(--ink)
+    }
 
-.pagination{
-  display:flex;align-items:center;justify-content:center;gap:4px;
-  margin-top:32px;padding-top:24px;border-top:1px solid var(--rule);
-}
-.pg{
-  width:36px;height:36px;border-radius:2px;
-  border:1px solid var(--rule);background:var(--paper2);
-  color:var(--ink2);cursor:pointer;
-  font-family:'DM Mono',monospace;font-size:12px;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .1s;
-}
-.pg:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
-.pg:disabled{opacity:.3;cursor:not-allowed}
-.pg.cur{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.pg-arr{width:auto;padding:0 14px}
+    .nav-item.active {
+      color: var(--ink);
+      border-bottom-color: var(--ink)
+    }
 
-/* STATS */
-.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
-.kpi{border:1px solid var(--rule);border-radius:2px;padding:28px 24px;background:var(--paper2)}
-.kpi-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px}
-.kpi-val{font-family:'Instrument Serif',serif;font-size:48px;color:var(--ink);line-height:1}
-.kpi-sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);margin-top:6px}
+    /* LAYOUT */
+    .wrap {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 48px 48px
+    }
 
-.stats-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.stat-panel{border:1px solid var(--rule);border-radius:2px;padding:24px;background:var(--paper2)}
-.stat-panel-title{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
-  color:var(--ink3);text-transform:uppercase;margin-bottom:20px;
-  padding-bottom:10px;border-bottom:1px solid var(--rule);
-}
-.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.bar-row:last-child{margin:0}
-.bar-key{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink2);width:80px;flex-shrink:0}
-.bar-track{flex:1;height:4px;background:var(--rule);border-radius:0}
-.bar-fill{height:100%;background:var(--ink);transition:width .8s ease}
-.bar-n{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink2);width:24px;text-align:right;flex-shrink:0}
+    .panel {
+      display: none
+    }
 
-.terms-panel{border:1px solid var(--rule);border-radius:2px;padding:24px;background:var(--paper2);margin-bottom:0}
-.terms-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
-.term{
-  font-family:'DM Mono',monospace;font-size:11px;
-  border:1px solid var(--rule);border-radius:2px;
-  padding:5px 12px;background:var(--paper);
-  color:var(--ink2);display:flex;align-items:center;gap:6px;
-  transition:all .1s;cursor:default;
-}
-.term:hover{border-color:var(--ink2);color:var(--ink)}
-.term-n{color:var(--ink3);font-size:10px}
-.no-terms{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink3);font-style:italic}
+    .panel.active {
+      display: block
+    }
 
-.spinner{display:flex;flex-direction:column;align-items:center;padding:60px;gap:16px}
-.spin{
-  width:32px;height:32px;border-radius:50%;
-  border:2px solid var(--rule);border-top-color:var(--ink);
-  animation:spin .7s linear infinite;
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3)}
+    /* BUILDER */
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
 
-::-webkit-scrollbar{width:4px}
-::-webkit-scrollbar-track{background:var(--paper)}
-::-webkit-scrollbar-thumb{background:var(--rule2);border-radius:2px}
-</style>
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      color: var(--ink);
+    }
+
+    .section-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      letter-spacing: 1px;
+    }
+
+    .format-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 28px
+    }
+
+    .fmt-card {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 20px 16px;
+      text-align: center;
+      cursor: pointer;
+      background: var(--paper2);
+      transition: all .15s;
+      user-select: none;
+    }
+
+    .fmt-card:hover {
+      border-color: var(--ink2)
+    }
+
+    .fmt-card.on {
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .fmt-card.on .fmt-name {
+      color: var(--paper)
+    }
+
+    .fmt-card.on .fmt-ext {
+      color: var(--paper3)
+    }
+
+    .fmt-ext {
+      font-family: 'DM Mono', monospace;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink2);
+      margin-bottom: 6px;
+    }
+
+    .fmt-name {
+      font-size: 11px;
+      color: var(--ink3);
+      letter-spacing: 1px;
+      text-transform: uppercase
+    }
+
+    .action-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border: 1px solid var(--ink);
+      border-radius: 2px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all .15s;
+    }
+
+    .btn-solid {
+      background: var(--ink);
+      color: var(--paper)
+    }
+
+    .btn-solid:hover {
+      background: var(--ink2)
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--ink)
+    }
+
+    .btn-outline:hover {
+      background: var(--paper2)
+    }
+
+    .btn-red {
+      background: var(--red);
+      color: #fff;
+      border-color: var(--red)
+    }
+
+    .btn-red:hover {
+      background: var(--red2);
+      border-color: var(--red2)
+    }
+
+    .build-status {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3)
+    }
+
+    .log-box {
+      margin-top: 20px;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      background: var(--ink);
+      color: #a8c96e;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      line-height: 2;
+      padding: 20px 24px;
+      display: none;
+      min-height: 80px;
+    }
+
+    .log-box.show {
+      display: block
+    }
+
+    .log-ln {
+      animation: slideIn .2s ease
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-6px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0)
+      }
+    }
+
+    .summary-box {
+      margin-top: 16px;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 24px;
+      background: var(--paper2);
+    }
+
+    .summary-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--ink3);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px
+    }
+
+    .summary-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: var(--ink3);
+      margin-bottom: 6px;
+      text-transform: uppercase
+    }
+
+    .summary-val {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--ink)
+    }
+
+    .summary-list {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink2);
+      line-height: 2
+    }
+
+    /* SEARCH */
+    .search-wrap {
+      margin-bottom: 32px
+    }
+
+    .search-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--ink3);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .search-field {
+      display: flex;
+      border: 2px solid var(--ink);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .search-field:focus-within {
+      outline: 3px solid var(--teal2);
+      outline-offset: 2px
+    }
+
+    .search-inp {
+      flex: 1;
+      border: none;
+      background: transparent;
+      color: var(--ink);
+      padding: 16px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .search-inp::placeholder {
+      color: var(--rule2)
+    }
+
+    .search-clear {
+      background: transparent;
+      border: none;
+      border-left: 1px solid var(--rule);
+      padding: 0 16px;
+      cursor: pointer;
+      color: var(--ink3);
+      font-size: 18px;
+      transition: color .1s;
+    }
+
+    .search-clear:hover {
+      color: var(--red)
+    }
+
+    .search-go {
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      padding: 0 28px;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: background .15s;
+    }
+
+    .search-go:hover {
+      background: var(--ink2)
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 14px 0
+    }
+
+    .chip {
+      padding: 5px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      cursor: pointer;
+      background: var(--paper2);
+      transition: all .1s;
+    }
+
+    .chip:hover {
+      border-color: var(--ink);
+      color: var(--ink)
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .flt label {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--ink3);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .flt select,
+    .flt input {
+      width: 100%;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      background: var(--paper2);
+      color: var(--ink);
+      padding: 8px 12px;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      outline: none;
+      transition: border .1s;
+      appearance: none;
+    }
+
+    .flt select:focus,
+    .flt input:focus {
+      border-color: var(--ink)
+    }
+
+    /* RESULTS */
+    #resultsArea {
+      margin-top: 36px
+    }
+
+    .res-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .res-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink3)
+    }
+
+    .res-count strong {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--ink);
+      font-weight: 400;
+      margin-right: 4px;
+    }
+
+    .res-page {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3)
+    }
+
+    .dym {
+      border-left: 3px solid var(--gold);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      background: var(--mark-bg);
+      font-size: 14px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .dym a {
+      color: var(--gold);
+      cursor: pointer;
+      font-weight: 500
+    }
+
+    .dym a:hover {
+      text-decoration: underline
+    }
+
+    .no-res {
+      text-align: center;
+      padding: 80px 20px;
+      border: 1px dashed var(--rule2);
+      border-radius: 2px;
+    }
+
+    .no-res-icon {
+      font-family: 'Instrument Serif', serif;
+      font-size: 64px;
+      color: var(--rule2);
+      margin-bottom: 12px
+    }
+
+    .no-res h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 24px;
+      font-weight: 400;
+      margin-bottom: 8px
+    }
+
+    .no-res p {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink3)
+    }
+
+    .card {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 24px;
+      margin-bottom: 10px;
+      background: var(--paper);
+      transition: all .15s;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 2px;
+      background: var(--teal);
+      opacity: 0;
+      transition: opacity .15s;
+    }
+
+    .card:hover {
+      border-color: var(--rule2);
+      background: var(--paper2)
+    }
+
+    .card:hover::before {
+      opacity: 1
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px
+    }
+
+    .card-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .card-title mark {
+      background: var(--mark-bg);
+      color: var(--mark);
+      padding: 0 2px
+    }
+
+    .card-score {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink3);
+      border: 1px solid var(--rule);
+      padding: 3px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      background: var(--paper2);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--ink3);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .card-desc mark {
+      background: var(--mark-bg);
+      color: var(--mark);
+      padding: 0 2px
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .5px;
+      padding: 3px 10px;
+      border-radius: 2px;
+      border: 1px solid var(--rule);
+      color: var(--ink3);
+      background: var(--paper2);
+    }
+
+    .tag-price {
+      color: var(--teal);
+      border-color: var(--teal2);
+      background: rgba(26, 107, 107, .05)
+    }
+
+    .tag-cat {
+      color: var(--ink);
+      border-color: var(--rule2);
+      font-weight: 500
+    }
+
+    .tag-brand {
+      color: var(--gold);
+      border-color: var(--gold2);
+      background: rgba(139, 105, 20, .04)
+    }
+
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .pg {
+      width: 36px;
+      height: 36px;
+      border-radius: 2px;
+      border: 1px solid var(--rule);
+      background: var(--paper2);
+      color: var(--ink2);
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .1s;
+    }
+
+    .pg:hover:not(:disabled) {
+      border-color: var(--ink);
+      color: var(--ink)
+    }
+
+    .pg:disabled {
+      opacity: .3;
+      cursor: not-allowed
+    }
+
+    .pg.cur {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--paper)
+    }
+
+    .pg-arr {
+      width: auto;
+      padding: 0 14px
+    }
+
+    /* STATS */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px
+    }
+
+    .kpi {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 28px 24px;
+      background: var(--paper2)
+    }
+
+    .kpi-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--ink3);
+      text-transform: uppercase;
+      margin-bottom: 10px
+    }
+
+    .kpi-val {
+      font-family: 'Instrument Serif', serif;
+      font-size: 48px;
+      color: var(--ink);
+      line-height: 1
+    }
+
+    .kpi-sub {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3);
+      margin-top: 6px
+    }
+
+    .stats-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px
+    }
+
+    .stat-panel {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 24px;
+      background: var(--paper2)
+    }
+
+    .stat-panel-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--ink3);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px
+    }
+
+    .bar-row:last-child {
+      margin: 0
+    }
+
+    .bar-key {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink2);
+      width: 80px;
+      flex-shrink: 0
+    }
+
+    .bar-track {
+      flex: 1;
+      height: 4px;
+      background: var(--rule);
+      border-radius: 0
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--ink);
+      transition: width .8s ease
+    }
+
+    .bar-n {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink2);
+      width: 24px;
+      text-align: right;
+      flex-shrink: 0
+    }
+
+    .terms-panel {
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 24px;
+      background: var(--paper2);
+      margin-bottom: 0
+    }
+
+    .terms-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 0
+    }
+
+    .term {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      border: 1px solid var(--rule);
+      border-radius: 2px;
+      padding: 5px 12px;
+      background: var(--paper);
+      color: var(--ink2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .1s;
+      cursor: default;
+    }
+
+    .term:hover {
+      border-color: var(--ink2);
+      color: var(--ink)
+    }
+
+    .term-n {
+      color: var(--ink3);
+      font-size: 10px
+    }
+
+    .no-terms {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink3);
+      font-style: italic
+    }
+
+    .spinner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px;
+      gap: 16px
+    }
+
+    .spin {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--rule);
+      border-top-color: var(--ink);
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .spin-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink3)
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--paper)
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--rule2);
+      border-radius: 2px
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <div class="logo">
-    <div class="logo-mark"></div>
-    Nexus
-  </div>
-  <div class="status-pill">
-    <div class="led" id="led"></div>
-    <span id="statusText">connecting</span>
-  </div>
-</header>
-
-<div class="nav">
-  <div class="nav-item active" id="tab-build"  onclick="switchTab('build')">Index Builder</div>
-  <div class="nav-item"        id="tab-search" onclick="switchTab('search')">Search</div>
-  <div class="nav-item"        id="tab-stats"  onclick="switchTab('stats')">Stats</div>
-</div>
-
-<div class="wrap">
-
-  <!-- BUILD -->
-  <div class="panel active" id="panel-build">
-    <div class="section-head">
-      <div class="section-title">Configure Index</div>
-      <div class="section-sub">select formats then build</div>
+  <header>
+    <div class="logo">
+      <div class="logo-mark"></div>
+      MESH GOOGLE
     </div>
-
-    <div class="format-row">
-      <div class="fmt-card on" data-fmt="json" onclick="toggleFmt(this)">
-        <div class="fmt-ext">.json</div><div class="fmt-name">JSON</div>
-      </div>
-      <div class="fmt-card on" data-fmt="csv" onclick="toggleFmt(this)">
-        <div class="fmt-ext">.csv</div><div class="fmt-name">CSV</div>
-      </div>
-      <div class="fmt-card on" data-fmt="txt" onclick="toggleFmt(this)">
-        <div class="fmt-ext">.txt</div><div class="fmt-name">Text</div>
-      </div>
-      <div class="fmt-card on" data-fmt="pdf" onclick="toggleFmt(this)">
-        <div class="fmt-ext">.pdf</div><div class="fmt-name">PDF</div>
-      </div>
-      <div class="fmt-card on" data-fmt="xlsx" onclick="toggleFmt(this)">
-        <div class="fmt-ext">.xlsx</div><div class="fmt-name">Excel</div>
-      </div>
+    <div class="status-pill">
+      <div class="led" id="led"></div>
+      <span id="statusText">connecting</span>
     </div>
+  </header>
 
-    <div class="action-row">
-      <button class="btn btn-solid" onclick="build()">Build Index</button>
-      <button class="btn btn-red"   onclick="build(true)">Rebuild</button>
-      <button class="btn btn-outline" onclick="switchTab('search')">Go to Search</button>
-      <span class="build-status" id="buildStatus"></span>
-    </div>
-    <div class="log-box" id="buildLog"></div>
-    <div id="buildSummary"></div>
+  <div class="nav">
+    <div class="nav-item active" id="tab-build" onclick="switchTab('build')">Index Builder</div>
+    <div class="nav-item" id="tab-search" onclick="switchTab('search')">Search</div>
+    <div class="nav-item" id="tab-stats" onclick="switchTab('stats')">Stats</div>
   </div>
 
-  <!-- SEARCH -->
-  <div class="panel" id="panel-search">
-    <div class="search-wrap">
-      <div class="search-eyebrow">search query</div>
-      <div class="search-field">
-        <input class="search-inp" id="qInput"
-          placeholder='AND  OR  NOT  "phrase"  fuzzy~  wild*'
-          onkeydown="if(event.key==='Enter')doSearch()"/>
-        <button class="search-clear" onclick="clearSearch()">x</button>
-        <button class="search-go" onclick="doSearch()">Search</button>
+  <div class="wrap">
+
+    <!-- BUILD -->
+    <div class="panel active" id="panel-build">
+      <div class="section-head">
+        <div class="section-title">Configure Index</div>
+        <div class="section-sub">select formats then build</div>
       </div>
 
-      <div class="chips">
-        <span class="chip" onclick="q('Apple AND camera')">Apple AND camera</span>
-        <span class="chip" onclick="q('Samsung OR Sony')">Samsung OR Sony</span>
-        <span class="chip" onclick="q('NOT gaming')">NOT gaming</span>
-        <span class="chip" onclick='q("&quot;noise cancelling&quot;")'>"noise cancelling"</span>
-        <span class="chip" onclick="q('lapto*')">lapto*</span>
-        <span class="chip" onclick="q('Samsng~')">Samsng~</span>
-        <span class="chip" onclick="q('(Apple OR Samsung) AND camera')">(Apple OR Samsung) AND camera</span>
-      </div>
-
-      <div class="filters">
-        <div class="flt"><label>Category</label>
-          <select id="fCat">
-            <option value="">All</option>
-            <option value="phones">Phones</option>
-            <option value="laptops">Laptops</option>
-            <option value="headphones">Headphones</option>
-            <option value="shoes">Shoes</option>
-            <option value="tvs">TVs</option>
-            <option value="tablets">Tablets</option>
-            <option value="cameras">Cameras</option>
-            <option value="watches">Watches</option>
-            <option value="gaming">Gaming</option>
-            <option value="home">Home</option>
-            <option value="components">Components</option>
-            <option value="storage">Storage</option>
-            <option value="monitors">Monitors</option>
-            <option value="accessories">Accessories</option>
-          </select>
+      <div class="format-row">
+        <div class="fmt-card on" data-fmt="json" onclick="toggleFmt(this)">
+          <div class="fmt-ext">.json</div>
+          <div class="fmt-name">JSON</div>
         </div>
-        <div class="flt"><label>File Type</label>
-          <select id="fType">
-            <option value="">All</option>
-            <option value="json">JSON</option>
-            <option value="csv">CSV</option>
-            <option value="txt">TXT</option>
-            <option value="pdf">PDF</option>
-            <option value="xlsx">Excel</option>
-          </select>
+        <div class="fmt-card on" data-fmt="csv" onclick="toggleFmt(this)">
+          <div class="fmt-ext">.csv</div>
+          <div class="fmt-name">CSV</div>
         </div>
-        <div class="flt"><label>Min Price</label><input type="number" id="fMin" placeholder="0"/></div>
-        <div class="flt"><label>Max Price</label><input type="number" id="fMax" placeholder="any"/></div>
-        <div class="flt"><label>Date From</label><input type="date" id="fFrom"/></div>
-        <div class="flt"><label>Date To</label><input type="date" id="fTo"/></div>
+        <div class="fmt-card on" data-fmt="txt" onclick="toggleFmt(this)">
+          <div class="fmt-ext">.txt</div>
+          <div class="fmt-name">Text</div>
+        </div>
+        <div class="fmt-card on" data-fmt="pdf" onclick="toggleFmt(this)">
+          <div class="fmt-ext">.pdf</div>
+          <div class="fmt-name">PDF</div>
+        </div>
+        <div class="fmt-card on" data-fmt="xlsx" onclick="toggleFmt(this)">
+          <div class="fmt-ext">.xlsx</div>
+          <div class="fmt-name">Excel</div>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-solid" onclick="build()">Build Index</button>
+        <button class="btn btn-red" onclick="build(true)">Rebuild</button>
+        <button class="btn btn-outline" onclick="switchTab('search')">Go to Search</button>
+        <span class="build-status" id="buildStatus"></span>
+      </div>
+      <div class="log-box" id="buildLog"></div>
+      <div id="buildSummary"></div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="panel" id="panel-search">
+      <div class="search-wrap">
+        <div class="search-eyebrow">search query</div>
+        <div class="search-field">
+          <input class="search-inp" id="qInput" placeholder='AND  OR  NOT  "phrase"  fuzzy~  wild*'
+            onkeydown="if(event.key==='Enter')doSearch()" />
+          <button class="search-clear" onclick="clearSearch()">x</button>
+          <button class="search-go" onclick="doSearch()">Search</button>
+        </div>
+
+        <div class="chips">
+          <span class="chip" onclick="q('CeraVe AND cleanser')">CeraVe AND cleanser</span>
+          <span class="chip" onclick="q('La Roche-Posay OR Bioderma')">La Roche-Posay OR Bioderma</span>
+          <span class="chip" onclick="q('NOT oily skin')">NOT oily skin</span>
+
+          <span class="chip" onclick="q('&quot;hydrating serum&quot;')">"hydrating serum"</span>
+
+          <span class="chip" onclick="q('niacinam*')">niacinam*</span>
+          <span class="chip" onclick="q('hydr*')">hydr*</span>
+
+          <span class="chip" onclick="q('(The Ordinary OR COSRX) AND acne')">(The Ordinary OR COSRX) AND acne</span>
+          <span class="chip" onclick="q('SPF AND sunscreen')">SPF AND sunscreen</span>
+          <span class="chip" onclick="q('micellar water')">micellar water</span>
+          <span class="chip" onclick="q('moisturizer OR cream')">moisturizer OR cream</span>
+        </div>
+
+        <div class="filters">
+          <div class="flt"><label>Category</label>
+            <select id="fCat">
+              <option value="">All</option>
+              <option value="phones">Phones</option>
+              <option value="laptops">Laptops</option>
+              <option value="headphones">Headphones</option>
+              <option value="shoes">Shoes</option>
+              <option value="tvs">TVs</option>
+              <option value="tablets">Tablets</option>
+              <option value="cameras">Cameras</option>
+              <option value="watches">Watches</option>
+              <option value="gaming">Gaming</option>
+              <option value="home">Home</option>
+              <option value="components">Components</option>
+              <option value="storage">Storage</option>
+              <option value="monitors">Monitors</option>
+              <option value="accessories">Accessories</option>
+            </select>
+          </div>
+          <div class="flt"><label>File Type</label>
+            <select id="fType">
+              <option value="">All</option>
+              <option value="json">JSON</option>
+              <option value="csv">CSV</option>
+              <option value="txt">TXT</option>
+              <option value="pdf">PDF</option>
+              <option value="xlsx">Excel</option>
+            </select>
+          </div>
+          <div class="flt"><label>Min Price</label><input type="number" id="fMin" placeholder="0" /></div>
+          <div class="flt"><label>Max Price</label><input type="number" id="fMax" placeholder="any" /></div>
+          <div class="flt"><label>Date From</label><input type="date" id="fFrom" /></div>
+          <div class="flt"><label>Date To</label><input type="date" id="fTo" /></div>
+        </div>
+      </div>
+      <div id="resultsArea"></div>
+    </div>
+
+    <!-- STATS -->
+    <div class="panel" id="panel-stats">
+      <div id="statsArea">
+        <div class="spinner">
+          <div class="spin"></div><span class="spin-label">loading</span>
+        </div>
       </div>
     </div>
-    <div id="resultsArea"></div>
+
   </div>
 
-  <!-- STATS -->
-  <div class="panel" id="panel-stats">
-    <div id="statsArea">
-      <div class="spinner"><div class="spin"></div><span class="spin-label">loading</span></div>
-    </div>
-  </div>
+  <script>
+    const API = "http://localhost:8000";
+    let lastQ = "";
+    let fmts = new Set(["json", "csv", "txt", "pdf", "xlsx"]);
 
-</div>
-
-<script>
-const API = "http://localhost:8000";
-let lastQ = "";
-let fmts = new Set(["json","csv","txt","pdf","xlsx"]);
-
-function switchTab(n){
-  document.querySelectorAll(".nav-item").forEach(t=>t.classList.remove("active"));
-  document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
-  document.getElementById("tab-"+n).classList.add("active");
-  document.getElementById("panel-"+n).classList.add("active");
-  if(n==="stats") loadStats();
-}
-
-async function checkStatus(){
-  try{
-    const r=await fetch(API+"/index-info");
-    const d=await r.json();
-    if(d.status==="connected"){
-      document.getElementById("led").className="led on";
-      document.getElementById("statusText").textContent=`${d.doc_count} docs / ${(d.size_bytes/1024).toFixed(0)}kb`;
-    }else throw 0;
-  }catch{
-    document.getElementById("led").className="led";
-    document.getElementById("statusText").textContent="disconnected";
-  }
-}
-
-function toggleFmt(el){
-  const f=el.dataset.fmt;
-  if(fmts.has(f)){fmts.delete(f);el.classList.remove("on")}
-  else{fmts.add(f);el.classList.add("on")}
-}
-
-function addLog(msg,col="#a8c96e"){
-  const box=document.getElementById("buildLog");
-  box.classList.add("show");
-  const ln=document.createElement("div");
-  ln.className="log-ln";ln.style.color=col;ln.textContent="  "+msg;
-  box.appendChild(ln);box.scrollTop=box.scrollHeight;
-}
-
-async function build(rebuild=false){
-  if(!fmts.size){alert("Select at least one format");return}
-  document.getElementById("buildLog").innerHTML="";
-  document.getElementById("buildLog").classList.add("show");
-  document.getElementById("buildSummary").innerHTML="";
-  document.getElementById("buildStatus").textContent="working...";
-
-  addLog(`${rebuild?"Rebuild":"Build"} started`);
-  addLog(`Formats: ${[...fmts].join(", ")}`);
-
-  try{
-    // بيبعت للـ /rebuild الحقيقي مع الـ formats
-    const r = await fetch(API+"/rebuild", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify([...fmts])
-    });
-    const d = await r.json();
-    if(d.status==="success"){
-      addLog(`Indexed ${d.total} documents`);
-      Object.entries(d.by_type).forEach(([k,v]) => addLog(`  ${k}: ${v} docs`));
-      addLog("Ready", "#22a89a");
-      document.getElementById("buildStatus").textContent="done";
-      showSummary(d);
-    } else {
-      addLog("Error: " + (d.message||"unknown"), "#c0392b");
+    function switchTab(n) {
+      document.querySelectorAll(".nav-item").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+      document.getElementById("tab-" + n).classList.add("active");
+      document.getElementById("panel-" + n).classList.add("active");
+      if (n === "stats") loadStats();
     }
-  } catch {
-    addLog("Backend not reachable", "#c0392b");
-    addLog("Run: uvicorn backend.main:app --reload", "#8b6914");
-  }
-  checkStatus();
-}
-function showSummary(d){
-  document.getElementById("buildSummary").innerHTML=`
+
+    async function checkStatus() {
+      try {
+        const r = await fetch(API + "/index-info");
+        const d = await r.json();
+        if (d.status === "connected") {
+          document.getElementById("led").className = "led on";
+          document.getElementById("statusText").textContent = `${d.doc_count} docs / ${(d.size_bytes / 1024).toFixed(0)}kb`;
+        } else throw 0;
+      } catch {
+        document.getElementById("led").className = "led";
+        document.getElementById("statusText").textContent = "disconnected";
+      }
+    }
+
+    function toggleFmt(el) {
+      const f = el.dataset.fmt;
+      if (fmts.has(f)) { fmts.delete(f); el.classList.remove("on") }
+      else { fmts.add(f); el.classList.add("on") }
+    }
+
+    function addLog(msg, col = "#a8c96e") {
+      const box = document.getElementById("buildLog");
+      box.classList.add("show");
+      const ln = document.createElement("div");
+      ln.className = "log-ln"; ln.style.color = col; ln.textContent = "  " + msg;
+      box.appendChild(ln); box.scrollTop = box.scrollHeight;
+    }
+
+    async function build(rebuild = false) {
+      if (!fmts.size) { alert("Select at least one format"); return }
+      document.getElementById("buildLog").innerHTML = "";
+      document.getElementById("buildLog").classList.add("show");
+      document.getElementById("buildSummary").innerHTML = "";
+      document.getElementById("buildStatus").textContent = "working...";
+
+      addLog(`${rebuild ? "Rebuild" : "Build"} started`);
+      addLog(`Formats: ${[...fmts].join(", ")}`);
+
+      try {
+       
+        const r = await fetch(API + "/rebuild", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify([...fmts])
+        });
+        const d = await r.json();
+        if (d.status === "success") {
+          addLog(`Indexed ${d.total} documents`);
+          Object.entries(d.by_type).forEach(([k, v]) => addLog(`  ${k}: ${v} docs`));
+          addLog("Ready", "#22a89a");
+          document.getElementById("buildStatus").textContent = "done";
+          showSummary(d);
+        } else {
+          addLog("Error: " + (d.message || "unknown"), "#c0392b");
+        }
+      } catch {
+        addLog("Backend not reachable", "#c0392b");
+        addLog("Run: uvicorn backend.main:app --reload", "#8b6914");
+      }
+      checkStatus();
+    }
+    function showSummary(d) {
+      document.getElementById("buildSummary").innerHTML = `
   <div class="summary-box">
     <div class="summary-title">Index Summary</div>
     <div class="summary-grid">
@@ -575,7 +1183,7 @@ function showSummary(d){
       </div>
       <div>
         <div class="summary-label">File Types</div>
-        <div class="summary-list">${Object.entries(d.by_type).map(([k,v])=>`${k}: ${v}`).join("<br>")}</div>
+        <div class="summary-list">${Object.entries(d.by_type).map(([k, v]) => `${k}: ${v}`).join("<br>")}</div>
       </div>
       <div>
         <div class="summary-label">Formats Indexed</div>
@@ -583,117 +1191,117 @@ function showSummary(d){
       </div>
     </div>
   </div>`;
-}
+    }
 
-function q(v){document.getElementById("qInput").value=v}
+    function q(v) { document.getElementById("qInput").value = v }
 
-async function doSearch(page=1){
-  const qv=document.getElementById("qInput").value.trim();
-  if(!qv)return;
-  lastQ=qv;
-  const p=new URLSearchParams({q:qv,page,size:5});
-  const cat=document.getElementById("fCat").value;
-  const ft=document.getElementById("fType").value;
-  const mn=document.getElementById("fMin").value;
-  const mx=document.getElementById("fMax").value;
-  const df=document.getElementById("fFrom").value;
-  const dt=document.getElementById("fTo").value;
-  if(cat)p.append("category",cat);
-  if(ft)p.append("file_type",ft);
-  if(mn)p.append("min_price",mn);
-  if(mx)p.append("max_price",mx);
-  if(df)p.append("date_from",df);
-  if(dt)p.append("date_to",dt);
+    async function doSearch(page = 1) {
+      const qv = document.getElementById("qInput").value.trim();
+      if (!qv) return;
+      lastQ = qv;
+      const p = new URLSearchParams({ q: qv, page, size: 5 });
+      const cat = document.getElementById("fCat").value;
+      const ft = document.getElementById("fType").value;
+      const mn = document.getElementById("fMin").value;
+      const mx = document.getElementById("fMax").value;
+      const df = document.getElementById("fFrom").value;
+      const dt = document.getElementById("fTo").value;
+      if (cat) p.append("category", cat);
+      if (ft) p.append("file_type", ft);
+      if (mn) p.append("min_price", mn);
+      if (mx) p.append("max_price", mx);
+      if (df) p.append("date_from", df);
+      if (dt) p.append("date_to", dt);
 
-  document.getElementById("resultsArea").innerHTML=
-    '<div class="spinner"><div class="spin"></div><span class="spin-label">searching</span></div>';
+      document.getElementById("resultsArea").innerHTML =
+        '<div class="spinner"><div class="spin"></div><span class="spin-label">searching</span></div>';
 
-  try{
-    const res=await fetch(`${API}/search?${p}`);
-    const data=await res.json();
-    renderResults(data);
-  }catch{
-    document.getElementById("resultsArea").innerHTML=
-      '<div class="no-res"><div class="no-res-icon">!</div><h3>Backend unreachable</h3><p>uvicorn backend.main:app --reload</p></div>';
-  }
-}
+      try {
+        const res = await fetch(`${API}/search?${p}`);
+        const data = await res.json();
+        renderResults(data);
+      } catch {
+        document.getElementById("resultsArea").innerHTML =
+          '<div class="no-res"><div class="no-res-icon">!</div><h3>Backend unreachable</h3><p>uvicorn backend.main:app --reload</p></div>';
+      }
+    }
 
-function renderResults(data){
-  const area=document.getElementById("resultsArea");
-  if(data.error){area.innerHTML=`<div class="no-res"><div class="no-res-icon">!</div><h3>Error</h3><p>${data.error}</p></div>`;return}
-  let html="";
+    function renderResults(data) {
+      const area = document.getElementById("resultsArea");
+      if (data.error) { area.innerHTML = `<div class="no-res"><div class="no-res-icon">!</div><h3>Error</h3><p>${data.error}</p></div>`; return }
+      let html = "";
 
-  if(data.suggestion){
-    const c=data.suggestion.replace(/<[^>]*>/g,"");
-    html+=`<div class="dym">Did you mean: <a onclick="q('${c}');doSearch()">${c}</a>?</div>`;
-  }
+      if (data.suggestion) {
+        const c = data.suggestion.replace(/<[^>]*>/g, "");
+        html += `<div class="dym">Did you mean: <a onclick="q('${c}');doSearch()">${c}</a>?</div>`;
+      }
 
-  if(data.total>0){
-    html+=`<div class="res-header">
-      <div class="res-count"><strong>${data.total}</strong> result${data.total>1?"s":""}</div>
+      if (data.total > 0) {
+        html += `<div class="res-header">
+      <div class="res-count"><strong>${data.total}</strong> result${data.total > 1 ? "s" : ""}</div>
       <div class="res-page">page ${data.page} of ${data.total_pages}</div>
     </div>`;
-  }
+      }
 
-  if(!data.results.length){
-    html+=`<div class="no-res"><div class="no-res-icon">0</div><h3>No results</h3><p>Nothing matched "${esc(lastQ)}"</p></div>`;
-    area.innerHTML=html;return;
-  }
+      if (!data.results.length) {
+        html += `<div class="no-res"><div class="no-res-icon">0</div><h3>No results</h3><p>Nothing matched "${esc(lastQ)}"</p></div>`;
+        area.innerHTML = html; return;
+      }
 
-  data.results.forEach(r=>{
-    html+=`<div class="card">
+      data.results.forEach(r => {
+        html += `<div class="card">
       <div class="card-top">
-        <div class="card-title">${r.highlight_name||esc(r.name||"")}</div>
+        <div class="card-title">${r.highlight_name || esc(r.name || "")}</div>
         <div class="card-score">score ${r.score}</div>
       </div>
-      <div class="card-desc">${r.highlight_desc||esc((r.description||"").substring(0,200))}</div>
+      <div class="card-desc">${r.highlight_desc || esc((r.description || "").substring(0, 200))}</div>
       <div class="card-meta">
-        ${r.price?`<span class="tag tag-price">${r.price.toLocaleString()} EGP</span>`:""}
-        ${r.category?`<span class="tag tag-cat">${r.category}</span>`:""}
-        ${r.brand?`<span class="tag tag-brand">${r.brand}</span>`:""}
-        ${r.file_type?`<span class="tag">.${r.file_type}</span>`:""}
-        ${r.filename&&r.filename!==r.name?`<span class="tag">${r.filename}</span>`:""}
-        ${r.mod_date?`<span class="tag">${r.mod_date}</span>`:""}
+        ${r.price ? `<span class="tag tag-price">${r.price.toLocaleString()} EGP</span>` : ""}
+        ${r.category ? `<span class="tag tag-cat">${r.category}</span>` : ""}
+        ${r.brand ? `<span class="tag tag-brand">${r.brand}</span>` : ""}
+        ${r.file_type ? `<span class="tag">.${r.file_type}</span>` : ""}
+        ${r.filename && r.filename !== r.name ? `<span class="tag">${r.filename}</span>` : ""}
+        ${r.mod_date ? `<span class="tag">${r.mod_date}</span>` : ""}
       </div>
     </div>`;
-  });
+      });
 
-  if(data.total_pages>1){
-    html+=`<div class="pagination">`;
-    html+=`<button class="pg pg-arr" onclick="doSearch(${data.page-1})" ${data.page<=1?"disabled":""}>prev</button>`;
-    for(let i=Math.max(1,data.page-2);i<=Math.min(data.total_pages,data.page+2);i++)
-      html+=`<button class="pg ${i===data.page?"cur":""}" onclick="doSearch(${i})">${i}</button>`;
-    html+=`<button class="pg pg-arr" onclick="doSearch(${data.page+1})" ${data.page>=data.total_pages?"disabled":""}>next</button>`;
-    html+=`</div>`;
-  }
-  area.innerHTML=html;
-}
+      if (data.total_pages > 1) {
+        html += `<div class="pagination">`;
+        html += `<button class="pg pg-arr" onclick="doSearch(${data.page - 1})" ${data.page <= 1 ? "disabled" : ""}>prev</button>`;
+        for (let i = Math.max(1, data.page - 2); i <= Math.min(data.total_pages, data.page + 2); i++)
+          html += `<button class="pg ${i === data.page ? "cur" : ""}" onclick="doSearch(${i})">${i}</button>`;
+        html += `<button class="pg pg-arr" onclick="doSearch(${data.page + 1})" ${data.page >= data.total_pages ? "disabled" : ""}>next</button>`;
+        html += `</div>`;
+      }
+      area.innerHTML = html;
+    }
 
-async function loadStats(){
-  document.getElementById("statsArea").innerHTML=
-    '<div class="spinner"><div class="spin"></div><span class="spin-label">loading</span></div>';
-  try{
-    const res=await fetch(API+"/stats");
-    const data=await res.json();
-    renderStats(data);
-  }catch{
-    document.getElementById("statsArea").innerHTML=
-      '<div class="no-res"><div class="no-res-icon">!</div><h3>Backend unreachable</h3></div>';
-  }
-}
+    async function loadStats() {
+      document.getElementById("statsArea").innerHTML =
+        '<div class="spinner"><div class="spin"></div><span class="spin-label">loading</span></div>';
+      try {
+        const res = await fetch(API + "/stats");
+        const data = await res.json();
+        renderStats(data);
+      } catch {
+        document.getElementById("statsArea").innerHTML =
+          '<div class="no-res"><div class="no-res-icon">!</div><h3>Backend unreachable</h3></div>';
+      }
+    }
 
-function renderStats(data){
-  if(data.error){
-    document.getElementById("statsArea").innerHTML=
-      `<div class="no-res"><div class="no-res-icon">!</div><h3>${data.error}</h3></div>`;
-    return;
-  }
-  const bt=data.by_file_type||{};
-  const bc=data.by_category||{};
-  const mt=Math.max(...Object.values(bt),1);
-  const mc=Math.max(...Object.values(bc),1);
+    function renderStats(data) {
+      if (data.error) {
+        document.getElementById("statsArea").innerHTML =
+          `<div class="no-res"><div class="no-res-icon">!</div><h3>${data.error}</h3></div>`;
+        return;
+      }
+      const bt = data.by_file_type || {};
+      const bc = data.by_category || {};
+      const mt = Math.max(...Object.values(bt), 1);
+      const mc = Math.max(...Object.values(bc), 1);
 
-  document.getElementById("statsArea").innerHTML=`
+      document.getElementById("statsArea").innerHTML = `
   <div class="section-head" style="margin-bottom:28px">
     <div class="section-title">Index Statistics</div>
   </div>
@@ -718,44 +1326,45 @@ function renderStats(data){
   <div class="stats-cols">
     <div class="stat-panel">
       <div class="stat-panel-title">By File Type</div>
-      ${Object.entries(bt).map(([k,v])=>`
+      ${Object.entries(bt).map(([k, v]) => `
       <div class="bar-row">
         <div class="bar-key">.${k}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mt*100)}%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v / mt * 100)}%"></div></div>
         <div class="bar-n">${v}</div>
-      </div>`).join("")||'<div class="no-terms">no data</div>'}
+      </div>`).join("") || '<div class="no-terms">no data</div>'}
     </div>
     <div class="stat-panel">
       <div class="stat-panel-title">By Category</div>
-      ${Object.entries(bc).map(([k,v])=>`
+      ${Object.entries(bc).map(([k, v]) => `
       <div class="bar-row">
         <div class="bar-key">${k}</div>
-        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mc*100)}%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v / mc * 100)}%"></div></div>
         <div class="bar-n">${v}</div>
-      </div>`).join("")||'<div class="no-terms">no data</div>'}
+      </div>`).join("") || '<div class="no-terms">no data</div>'}
     </div>
   </div>
 
   <div class="terms-panel">
     <div class="stat-panel-title">Top 10 Frequent Terms</div>
-    ${data.top_terms&&data.top_terms.length
-      ?`<div class="terms-wrap">${data.top_terms.map(t=>`
+    ${data.top_terms && data.top_terms.length
+          ? `<div class="terms-wrap">${data.top_terms.map(t => `
         <div class="term">${t.term}<span class="term-n">${t.count}</span></div>`).join("")}</div>`
-      :`<div class="no-terms">not enough data for term analysis</div>`}
+          : `<div class="no-terms">not enough data for term analysis</div>`}
   </div>`;
-}
+    }
 
-function clearSearch(){
-  document.getElementById("qInput").value="";
-  ["fCat","fType"].forEach(id=>document.getElementById(id).value="");
-  ["fMin","fMax","fFrom","fTo"].forEach(id=>document.getElementById(id).value="");
-  document.getElementById("resultsArea").innerHTML="";
-}
+    function clearSearch() {
+      document.getElementById("qInput").value = "";
+      ["fCat", "fType"].forEach(id => document.getElementById(id).value = "");
+      ["fMin", "fMax", "fFrom", "fTo"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("resultsArea").innerHTML = "";
+    }
 
-function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+    function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") }
 
-checkStatus();
-setInterval(checkStatus,15000);
-</script>
+    checkStatus();
+    setInterval(checkStatus, 15000);
+  </script>
 </body>
+
 </html>
