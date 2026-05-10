@@ -3,281 +3,504 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NEXUS — Search Engine</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<title>MESH GOOGLE</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg:      #060810;
-  --bg2:     #0d1021;
-  --panel:   #111628;
-  --border:  #1e2540;
-  --border2: #2a3260;
-  --accent:  #00e5ff;
-  --accent2: #ff3d71;
-  --accent3: #a259ff;
-  --gold:    #ffd166;
-  --text:    #e8eaf6;
-  --muted:   #5c6494;
-  --mark-bg: rgba(0,229,255,.15);
-  --mark:    #00e5ff;
-  --success: #00e676;
-  --glow:    0 0 20px rgba(0,229,255,.25);
+:root{
+  --ink:#0a0a08;
+  --paper:#f5f0e8;
+  --paper2:#ede8dc;
+  --paper3:#e4ddd0;
+  --rule:#c8bfad;
+  --rule2:#a89e8c;
+  --red:#c0392b;
+  --red2:#e74c3c;
+  --teal:#1a6b6b;
+  --teal2:#22a89a;
+  --gold:#8b6914;
+  --gold2:#c9951a;
+  --ink2:#3d3830;
+  --ink3:#6b6258;
+  --mark-bg:#fff3cd;
+  --mark:#8b6914;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,.03) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;z-index:0}
+html{font-size:16px}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'DM Sans',sans-serif;
+  min-height:100vh;
+  line-height:1.6;
+}
 
-header{position:sticky;top:0;z-index:100;background:rgba(6,8,16,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;letter-spacing:4px;color:var(--accent);text-shadow:var(--glow);display:flex;align-items:center;gap:12px}
-.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.status-badge{display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:6px 14px;font-family:'Space Mono',monospace;font-size:11px}
-.status-led{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:all .3s}
-.status-led.on{background:var(--success);box-shadow:0 0 10px var(--success)}
-#statusText{color:var(--muted);white-space:nowrap}
+/* NOISE TEXTURE */
+body::after{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.6;
+}
 
-.nav-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg2);padding:0 40px;position:relative;z-index:1}
-.nav-tab{padding:16px 28px;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:8px}
-.nav-tab:hover{color:var(--text)}
-.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+/* HEADER */
+header{
+  border-bottom:2px solid var(--ink);
+  padding:0 48px;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--paper);
+  position:sticky;top:0;z-index:100;
+}
+.logo{
+  font-family:'Instrument Serif',serif;
+  font-size:26px;letter-spacing:-.5px;color:var(--ink);
+  display:flex;align-items:center;gap:10px;
+}
+.logo-mark{
+  width:10px;height:10px;
+  background:var(--red);
+  border-radius:50%;
+  animation:blink 3s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.status-pill{
+  display:flex;align-items:center;gap:8px;
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--ink3);
+  border:1px solid var(--rule);
+  padding:5px 12px;border-radius:2px;
+  background:var(--paper2);
+}
+.led{width:6px;height:6px;border-radius:50%;background:var(--rule2)}
+.led.on{background:var(--teal);box-shadow:0 0 6px var(--teal2)}
 
-.main{max-width:1200px;margin:0 auto;padding:40px;position:relative;z-index:1}
+/* NAV */
+.nav{
+  border-bottom:1px solid var(--rule);
+  background:var(--paper2);
+  padding:0 48px;
+  display:flex;gap:0;
+}
+.nav-item{
+  padding:14px 24px;
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--ink3);cursor:pointer;
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:all .15s;
+}
+.nav-item:hover{color:var(--ink)}
+.nav-item.active{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* LAYOUT */
+.wrap{max-width:1140px;margin:0 auto;padding:48px 48px}
 .panel{display:none}.panel.active{display:block}
 
 /* BUILDER */
-.builder-hero{background:linear-gradient(135deg,rgba(0,229,255,.05),rgba(162,89,255,.05));border:1px solid var(--border2);border-radius:16px;padding:40px;margin-bottom:24px;position:relative;overflow:hidden}
-.builder-hero::before{content:'INDEX';position:absolute;right:40px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:100px;font-weight:700;color:rgba(0,229,255,.03);pointer-events:none}
-.builder-title{font-size:28px;font-weight:800;margin-bottom:6px}
-.builder-sub{color:var(--muted);font-size:14px;margin-bottom:32px}
-.format-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px}
-.format-card{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:20px 16px;text-align:center;cursor:pointer;transition:all .2s;user-select:none}
-.format-card:hover{border-color:var(--border2);transform:translateY(-2px)}
-.format-card.selected{border-color:var(--accent);background:rgba(0,229,255,.08);box-shadow:0 0 20px rgba(0,229,255,.12)}
-.format-icon{font-size:32px;margin-bottom:10px}
-.format-name{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;letter-spacing:1px;color:var(--text)}
-.format-desc{font-size:11px;color:var(--muted);margin-top:4px}
-.format-card.selected .format-name{color:var(--accent)}
-.build-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.btn{padding:12px 28px;border-radius:8px;border:none;cursor:pointer;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;transition:all .2s;display:flex;align-items:center;gap:8px}
-.btn-primary{background:var(--accent);color:#000}
-.btn-primary:hover{box-shadow:0 0 24px rgba(0,229,255,.4);transform:translateY(-1px)}
-.btn-danger{background:var(--accent2);color:#fff}
-.btn-danger:hover{box-shadow:0 0 24px rgba(255,61,113,.3);transform:translateY(-1px)}
-.btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border2)}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
-.build-log{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;margin-top:20px;font-family:'Space Mono',monospace;font-size:12px;color:var(--success);line-height:2;min-height:80px;display:none}
-.build-log.show{display:block}
-.log-line{animation:fadeIn .3s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.section-head{
+  display:flex;align-items:baseline;gap:16px;
+  margin-bottom:32px;
+  padding-bottom:16px;
+  border-bottom:1px solid var(--rule);
+}
+.section-title{
+  font-family:'Instrument Serif',serif;
+  font-size:32px;color:var(--ink);
+}
+.section-sub{
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:var(--ink3);letter-spacing:1px;
+}
+
+.format-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:28px}
+.fmt-card{
+  border:1px solid var(--rule);
+  border-radius:2px;
+  padding:20px 16px;
+  text-align:center;cursor:pointer;
+  background:var(--paper2);
+  transition:all .15s;
+  user-select:none;
+}
+.fmt-card:hover{border-color:var(--ink2)}
+.fmt-card.on{
+  border:2px solid var(--ink);
+  background:var(--ink);
+  color:var(--paper);
+}
+.fmt-card.on .fmt-name{color:var(--paper)}
+.fmt-card.on .fmt-ext{color:var(--paper3)}
+.fmt-ext{
+  font-family:'DM Mono',monospace;font-size:22px;font-weight:500;
+  color:var(--ink2);margin-bottom:6px;
+}
+.fmt-name{font-size:11px;color:var(--ink3);letter-spacing:1px;text-transform:uppercase}
+
+.action-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:0}
+.btn{
+  padding:10px 24px;border:1px solid var(--ink);border-radius:2px;
+  cursor:pointer;font-family:'DM Mono',monospace;font-size:11px;
+  font-weight:500;letter-spacing:2px;text-transform:uppercase;
+  transition:all .15s;
+}
+.btn-solid{background:var(--ink);color:var(--paper)}
+.btn-solid:hover{background:var(--ink2)}
+.btn-outline{background:transparent;color:var(--ink)}
+.btn-outline:hover{background:var(--paper2)}
+.btn-red{background:var(--red);color:#fff;border-color:var(--red)}
+.btn-red:hover{background:var(--red2);border-color:var(--red2)}
+.build-status{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3)}
+
+.log-box{
+  margin-top:20px;border:1px solid var(--rule);border-radius:2px;
+  background:var(--ink);color:#a8c96e;
+  font-family:'DM Mono',monospace;font-size:12px;line-height:2;
+  padding:20px 24px;display:none;min-height:80px;
+}
+.log-box.show{display:block}
+.log-ln{animation:slideIn .2s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:translateX(0)}}
+
+.summary-box{
+  margin-top:16px;border:1px solid var(--rule);border-radius:2px;
+  padding:24px;background:var(--paper2);
+}
+.summary-title{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:16px;
+}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.summary-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--ink3);margin-bottom:6px;text-transform:uppercase}
+.summary-val{font-family:'Instrument Serif',serif;font-size:28px;color:var(--ink)}
+.summary-list{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink2);line-height:2}
 
 /* SEARCH */
-.search-label{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--muted);margin-bottom:12px}
-.search-bar{display:flex;background:var(--panel);border:1px solid var(--border2);border-radius:12px;overflow:hidden;transition:box-shadow .2s}
-.search-bar:focus-within{box-shadow:0 0 0 1px var(--accent),var(--glow);border-color:var(--accent)}
-.search-input{flex:1;background:transparent;border:none;color:var(--text);padding:18px 24px;font-family:'Syne',sans-serif;font-size:16px;outline:none}
-.search-input::placeholder{color:var(--muted)}
-.search-btn{background:var(--accent);color:#000;border:none;padding:18px 32px;cursor:pointer;font-family:'Syne',sans-serif;font-size:14px;font-weight:800;letter-spacing:2px;transition:all .2s}
-.search-btn:hover{background:#33eaff}
-.clear-btn{background:transparent;border:none;color:var(--muted);padding:18px 18px;cursor:pointer;font-size:18px;transition:color .2s}
-.clear-btn:hover{color:var(--accent2)}
-.examples{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
-.ex-chip{padding:6px 14px;border-radius:20px;background:var(--panel);border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s}
-.ex-chip:hover{border-color:var(--accent);color:var(--accent)}
-.ex-chip b{color:var(--accent3);font-weight:400}
-.filters-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:16px}
-.flt label{display:block;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:6px;text-transform:uppercase}
-.flt select,.flt input{width:100%;background:var(--panel);border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:8px;font-family:'Syne',sans-serif;font-size:13px;outline:none;transition:border .2s;appearance:none}
-.flt select:focus,.flt input:focus{border-color:var(--accent)}
+.search-wrap{margin-bottom:32px}
+.search-eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:10px;
+}
+.search-field{
+  display:flex;border:2px solid var(--ink);border-radius:2px;overflow:hidden;
+}
+.search-field:focus-within{outline:3px solid var(--teal2);outline-offset:2px}
+.search-inp{
+  flex:1;border:none;background:transparent;
+  color:var(--ink);padding:16px 20px;
+  font-family:'DM Sans',sans-serif;font-size:16px;outline:none;
+}
+.search-inp::placeholder{color:var(--rule2)}
+.search-clear{
+  background:transparent;border:none;border-left:1px solid var(--rule);
+  padding:0 16px;cursor:pointer;color:var(--ink3);font-size:18px;
+  transition:color .1s;
+}
+.search-clear:hover{color:var(--red)}
+.search-go{
+  background:var(--ink);color:var(--paper);border:none;
+  padding:0 28px;cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+  letter-spacing:2px;text-transform:uppercase;transition:background .15s;
+}
+.search-go:hover{background:var(--ink2)}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.chip{
+  padding:5px 12px;border:1px solid var(--rule);border-radius:2px;
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);
+  cursor:pointer;background:var(--paper2);transition:all .1s;
+}
+.chip:hover{border-color:var(--ink);color:var(--ink)}
+
+.filters{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;
+  padding-top:16px;border-top:1px solid var(--rule);
+}
+.flt label{
+  display:block;font-family:'DM Mono',monospace;font-size:10px;
+  letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:5px;
+}
+.flt select,.flt input{
+  width:100%;border:1px solid var(--rule);border-radius:2px;
+  background:var(--paper2);color:var(--ink);
+  padding:8px 12px;font-family:'DM Mono',monospace;font-size:12px;
+  outline:none;transition:border .1s;appearance:none;
+}
+.flt select:focus,.flt input:focus{border-color:var(--ink)}
 
 /* RESULTS */
-#resultsArea{margin-top:32px}
-.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.results-count{font-family:'Space Mono',monospace;font-size:13px}
-.results-count .num{color:var(--accent);font-size:20px;font-weight:700}
-.dym{background:linear-gradient(90deg,rgba(162,89,255,.1),rgba(0,229,255,.05));border:1px solid rgba(162,89,255,.3);border-left:3px solid var(--accent3);border-radius:8px;padding:14px 20px;margin-bottom:20px;font-size:14px;display:flex;align-items:center;gap:10px}
-.dym a{color:var(--accent3);cursor:pointer;font-weight:700}
+#resultsArea{margin-top:36px}
+.res-header{
+  display:flex;align-items:baseline;justify-content:space-between;
+  margin-bottom:20px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule);
+}
+.res-count{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink3)}
+.res-count strong{
+  font-family:'Instrument Serif',serif;font-size:28px;
+  color:var(--ink);font-weight:400;margin-right:4px;
+}
+.res-page{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3)}
+
+.dym{
+  border-left:3px solid var(--gold);
+  padding:12px 16px;margin-bottom:20px;
+  background:var(--mark-bg);
+  font-size:14px;font-family:'DM Mono',monospace;
+}
+.dym a{color:var(--gold);cursor:pointer;font-weight:500}
 .dym a:hover{text-decoration:underline}
-.no-results{text-align:center;padding:80px 20px;border:1px dashed var(--border2);border-radius:16px}
-.no-results .nr-icon{font-size:56px;margin-bottom:16px}
-.no-results h3{font-size:20px;margin-bottom:8px}
-.no-results p{color:var(--muted);font-size:14px}
-.result-card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:12px;transition:all .2s;position:relative;overflow:hidden}
-.result-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--accent);opacity:0;transition:opacity .2s}
-.result-card:hover{border-color:var(--border2);transform:translateX(4px)}
-.result-card:hover::before{opacity:1}
-.rc-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:10px}
-.rc-title{font-size:17px;font-weight:700;line-height:1.3}
-.rc-title mark{background:var(--mark-bg);color:var(--mark);border-radius:3px;padding:0 3px}
-.rc-score{font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);background:rgba(255,209,102,.1);border:1px solid rgba(255,209,102,.2);border-radius:20px;padding:4px 12px;white-space:nowrap;flex-shrink:0}
-.rc-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:14px}
-.rc-desc mark{background:var(--mark-bg);color:var(--mark);border-radius:3px;padding:0 3px}
-.rc-meta{display:flex;flex-wrap:wrap;gap:8px}
-.badge{font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid transparent;letter-spacing:.5px}
-.badge-price{color:var(--success);background:rgba(0,230,118,.08);border-color:rgba(0,230,118,.2)}
-.badge-cat{color:var(--accent);background:rgba(0,229,255,.08);border-color:rgba(0,229,255,.2)}
-.badge-brand{color:var(--accent3);background:rgba(162,89,255,.08);border-color:rgba(162,89,255,.2)}
-.badge-type{color:var(--muted);background:var(--bg2);border-color:var(--border)}
-.badge-date{color:var(--muted);background:var(--bg2);border-color:var(--border)}
-.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
-.pg-btn{width:40px;height:40px;border-radius:8px;background:var(--panel);border:1px solid var(--border);color:var(--text);cursor:pointer;font-size:13px;font-family:'Space Mono',monospace;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.pg-btn:hover:not(:disabled){border-color:var(--accent);color:var(--accent)}
-.pg-btn:disabled{opacity:.3;cursor:not-allowed}
-.pg-btn.active{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
-.pg-arrow{width:auto;padding:0 16px;font-size:16px}
+
+.no-res{
+  text-align:center;padding:80px 20px;
+  border:1px dashed var(--rule2);border-radius:2px;
+}
+.no-res-icon{font-family:'Instrument Serif',serif;font-size:64px;color:var(--rule2);margin-bottom:12px}
+.no-res h3{font-family:'Instrument Serif',serif;font-size:24px;font-weight:400;margin-bottom:8px}
+.no-res p{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink3)}
+
+.card{
+  border:1px solid var(--rule);border-radius:2px;
+  padding:24px;margin-bottom:10px;
+  background:var(--paper);
+  transition:all .15s;
+  position:relative;
+}
+.card::before{
+  content:'';position:absolute;
+  left:0;top:4px;bottom:4px;width:2px;
+  background:var(--teal);opacity:0;
+  transition:opacity .15s;
+}
+.card:hover{border-color:var(--rule2);background:var(--paper2)}
+.card:hover::before{opacity:1}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:8px}
+.card-title{
+  font-family:'Instrument Serif',serif;font-size:20px;font-weight:400;line-height:1.2;
+}
+.card-title mark{background:var(--mark-bg);color:var(--mark);padding:0 2px}
+.card-score{
+  font-family:'DM Mono',monospace;font-size:10px;color:var(--ink3);
+  border:1px solid var(--rule);padding:3px 10px;border-radius:2px;
+  white-space:nowrap;flex-shrink:0;background:var(--paper2);
+}
+.card-desc{
+  font-size:13px;color:var(--ink3);line-height:1.7;margin-bottom:14px;
+}
+.card-desc mark{background:var(--mark-bg);color:var(--mark);padding:0 2px}
+.card-meta{display:flex;flex-wrap:wrap;gap:6px}
+.tag{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.5px;
+  padding:3px 10px;border-radius:2px;border:1px solid var(--rule);
+  color:var(--ink3);background:var(--paper2);
+}
+.tag-price{color:var(--teal);border-color:var(--teal2);background:rgba(26,107,107,.05)}
+.tag-cat{color:var(--ink);border-color:var(--rule2);font-weight:500}
+.tag-brand{color:var(--gold);border-color:var(--gold2);background:rgba(139,105,20,.04)}
+
+.pagination{
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  margin-top:32px;padding-top:24px;border-top:1px solid var(--rule);
+}
+.pg{
+  width:36px;height:36px;border-radius:2px;
+  border:1px solid var(--rule);background:var(--paper2);
+  color:var(--ink2);cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:12px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .1s;
+}
+.pg:hover:not(:disabled){border-color:var(--ink);color:var(--ink)}
+.pg:disabled{opacity:.3;cursor:not-allowed}
+.pg.cur{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pg-arr{width:auto;padding:0 14px}
 
 /* STATS */
-.stats-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
-.kpi{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:28px 24px;position:relative;overflow:hidden}
-.kpi::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--accent);opacity:.04}
-.kpi-label{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:12px}
-.kpi-value{font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--accent);line-height:1}
-.kpi-sub{font-size:12px;color:var(--muted);margin-top:8px}
-.stats-grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.stat-block{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px}
-.stat-block-title{font-size:12px;font-weight:700;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:20px}
-.breakdown-item{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.breakdown-item:last-child{margin:0}
-.breakdown-key{font-family:'Space Mono',monospace;font-size:12px;color:var(--text);width:90px;flex-shrink:0}
-.breakdown-bar-wrap{flex:1;height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
-.breakdown-bar{height:100%;background:var(--accent);border-radius:3px;transition:width .8s ease}
-.breakdown-count{font-family:'Space Mono',monospace;font-size:12px;color:var(--accent);width:28px;text-align:right;flex-shrink:0}
-.terms-cloud{display:flex;flex-wrap:wrap;gap:8px}
-.term-tag{padding:7px 16px;border-radius:20px;background:var(--bg2);border:1px solid var(--border);font-family:'Space Mono',monospace;font-size:12px;color:var(--text);display:flex;align-items:center;gap:6px;transition:all .15s}
-.term-tag:hover{border-color:var(--accent);color:var(--accent)}
-.term-tag-count{font-size:10px;color:var(--muted);background:var(--panel);border-radius:10px;padding:1px 7px}
-.no-terms{color:var(--muted);font-size:12px;font-family:'Space Mono',monospace;line-height:2}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px}
+.kpi{border:1px solid var(--rule);border-radius:2px;padding:28px 24px;background:var(--paper2)}
+.kpi-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--ink3);text-transform:uppercase;margin-bottom:10px}
+.kpi-val{font-family:'Instrument Serif',serif;font-size:48px;color:var(--ink);line-height:1}
+.kpi-sub{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3);margin-top:6px}
 
-.spinner{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px;color:var(--muted);gap:16px}
-.spin-ring{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin .8s linear infinite}
+.stats-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.stat-panel{border:1px solid var(--rule);border-radius:2px;padding:24px;background:var(--paper2)}
+.stat-panel-title{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;
+  color:var(--ink3);text-transform:uppercase;margin-bottom:20px;
+  padding-bottom:10px;border-bottom:1px solid var(--rule);
+}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.bar-row:last-child{margin:0}
+.bar-key{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink2);width:80px;flex-shrink:0}
+.bar-track{flex:1;height:4px;background:var(--rule);border-radius:0}
+.bar-fill{height:100%;background:var(--ink);transition:width .8s ease}
+.bar-n{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink2);width:24px;text-align:right;flex-shrink:0}
+
+.terms-panel{border:1px solid var(--rule);border-radius:2px;padding:24px;background:var(--paper2);margin-bottom:0}
+.terms-wrap{display:flex;flex-wrap:wrap;gap:6px;margin-top:0}
+.term{
+  font-family:'DM Mono',monospace;font-size:11px;
+  border:1px solid var(--rule);border-radius:2px;
+  padding:5px 12px;background:var(--paper);
+  color:var(--ink2);display:flex;align-items:center;gap:6px;
+  transition:all .1s;cursor:default;
+}
+.term:hover{border-color:var(--ink2);color:var(--ink)}
+.term-n{color:var(--ink3);font-size:10px}
+.no-terms{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink3);font-style:italic}
+
+.spinner{display:flex;flex-direction:column;align-items:center;padding:60px;gap:16px}
+.spin{
+  width:32px;height:32px;border-radius:50%;
+  border:2px solid var(--rule);border-top-color:var(--ink);
+  animation:spin .7s linear infinite;
+}
 @keyframes spin{to{transform:rotate(360deg)}}
-.toast{position:fixed;bottom:32px;right:32px;z-index:999;background:var(--panel);border:1px solid var(--border2);border-left:3px solid var(--accent);border-radius:10px;padding:16px 20px;font-size:13px;min-width:260px;animation:slideUp .3s ease;box-shadow:0 8px 32px rgba(0,0,0,.4)}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.spin-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink3)}
+
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--rule2);border-radius:2px}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo"><div class="logo-dot"></div>NEXUS</div>
-  <div class="status-badge">
-    <div class="status-led" id="statusLed"></div>
-    <span id="statusText">connecting...</span>
+  <div class="logo">
+    <div class="logo-mark"></div>
+    Nexus
+  </div>
+  <div class="status-pill">
+    <div class="led" id="led"></div>
+    <span id="statusText">connecting</span>
   </div>
 </header>
 
-<div class="nav-tabs">
-  <div class="nav-tab active" id="tab-build"  onclick="switchTab('build')">⚙️ INDEX BUILDER</div>
-  <div class="nav-tab"        id="tab-search" onclick="switchTab('search')">🔍 SEARCH</div>
-  <div class="nav-tab"        id="tab-stats"  onclick="switchTab('stats')">📊 STATS</div>
+<div class="nav">
+  <div class="nav-item active" id="tab-build"  onclick="switchTab('build')">Index Builder</div>
+  <div class="nav-item"        id="tab-search" onclick="switchTab('search')">Search</div>
+  <div class="nav-item"        id="tab-stats"  onclick="switchTab('stats')">Stats</div>
 </div>
 
-<div class="main">
+<div class="wrap">
 
-  <!-- INDEX BUILDER -->
+  <!-- BUILD -->
   <div class="panel active" id="panel-build">
-    <div class="builder-hero">
-      <div class="builder-title">Configure Your Index</div>
-      <div class="builder-sub">Select which file formats to include, then build or rebuild the index.</div>
-      <div class="format-grid">
-        <div class="format-card selected" data-fmt="json" onclick="toggleFormat(this)">
-          <div class="format-icon">📋</div><div class="format-name">JSON</div><div class="format-desc">Objects & arrays</div>
-        </div>
-        <div class="format-card selected" data-fmt="csv" onclick="toggleFormat(this)">
-          <div class="format-icon">📊</div><div class="format-name">CSV</div><div class="format-desc">Tabular data</div>
-        </div>
-        <div class="format-card selected" data-fmt="txt" onclick="toggleFormat(this)">
-          <div class="format-icon">📄</div><div class="format-name">TXT</div><div class="format-desc">Plain text</div>
-        </div>
-        <div class="format-card selected" data-fmt="pdf" onclick="toggleFormat(this)">
-          <div class="format-icon">📕</div><div class="format-name">PDF</div><div class="format-desc">Documents</div>
-        </div>
-        <div class="format-card selected" data-fmt="xlsx" onclick="toggleFormat(this)">
-          <div class="format-icon">📗</div><div class="format-name">EXCEL</div><div class="format-desc">Spreadsheets</div>
-        </div>
-      </div>
-      <div class="build-actions">
-        <button class="btn btn-primary" onclick="buildIndex()">▶ BUILD INDEX</button>
-        <button class="btn btn-danger"  onclick="buildIndex(true)">↺ REBUILD</button>
-        <button class="btn btn-ghost"   onclick="switchTab('search')">→ GO TO SEARCH</button>
-        <span id="buildStatus" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)"></span>
-      </div>
-      <div class="build-log" id="buildLog"></div>
+    <div class="section-head">
+      <div class="section-title">Configure Index</div>
+      <div class="section-sub">select formats then build</div>
     </div>
+
+    <div class="format-row">
+      <div class="fmt-card on" data-fmt="json" onclick="toggleFmt(this)">
+        <div class="fmt-ext">.json</div><div class="fmt-name">JSON</div>
+      </div>
+      <div class="fmt-card on" data-fmt="csv" onclick="toggleFmt(this)">
+        <div class="fmt-ext">.csv</div><div class="fmt-name">CSV</div>
+      </div>
+      <div class="fmt-card on" data-fmt="txt" onclick="toggleFmt(this)">
+        <div class="fmt-ext">.txt</div><div class="fmt-name">Text</div>
+      </div>
+      <div class="fmt-card on" data-fmt="pdf" onclick="toggleFmt(this)">
+        <div class="fmt-ext">.pdf</div><div class="fmt-name">PDF</div>
+      </div>
+      <div class="fmt-card on" data-fmt="xlsx" onclick="toggleFmt(this)">
+        <div class="fmt-ext">.xlsx</div><div class="fmt-name">Excel</div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-solid" onclick="build()">Build Index</button>
+      <button class="btn btn-red"   onclick="build(true)">Rebuild</button>
+      <button class="btn btn-outline" onclick="switchTab('search')">Go to Search</button>
+      <span class="build-status" id="buildStatus"></span>
+    </div>
+    <div class="log-box" id="buildLog"></div>
     <div id="buildSummary"></div>
   </div>
 
   <!-- SEARCH -->
   <div class="panel" id="panel-search">
-    <div class="search-label">// SEARCH QUERY</div>
-    <div class="search-bar">
-      <input class="search-input" id="queryInput"
-        placeholder='Type query... AND  OR  NOT  "phrase"  fuzzy~  wild*'
-        onkeydown="if(event.key==='Enter') doSearch()"/>
-      <button class="clear-btn" onclick="clearSearch()">✕</button>
-      <button class="search-btn" onclick="doSearch()">SEARCH</button>
-    </div>
-    <div class="examples">
-      <span style="font-size:11px;color:var(--muted);font-family:'Space Mono',monospace;align-self:center">TRY →</span>
-      <span class="ex-chip" onclick="q('Apple AND camera')"><b>AND</b> Apple AND camera</span>
-      <span class="ex-chip" onclick="q('Samsung OR Sony')"><b>OR</b> Samsung OR Sony</span>
-      <span class="ex-chip" onclick="q('NOT gaming')"><b>NOT</b> NOT gaming</span>
-      <span class="ex-chip" onclick='q("&quot;noise cancelling&quot;")'><b>""</b> "noise cancelling"</span>
-      <span class="ex-chip" onclick="q('lapto*')"><b>*</b> lapto*</span>
-      <span class="ex-chip" onclick="q('Samsng~')"><b>~</b> Samsng~</span>
-      <span class="ex-chip" onclick="q('(Apple OR Samsung) AND camera')">(group)</span>
-    </div>
-    <div class="filters-row">
-      <div class="flt"><label>Category</label>
-        <select id="filterCategory">
-          <option value="">All Categories</option>
-          <option value="phones">📱 Phones</option>
-          <option value="laptops">💻 Laptops</option>
-          <option value="headphones">🎧 Headphones</option>
-          <option value="shoes">👟 Shoes</option>
-          <option value="tvs">📺 TVs</option>
-          <option value="tablets">📱 Tablets</option>
-          <option value="cameras">📷 Cameras</option>
-          <option value="watches">⌚ Watches</option>
-          <option value="gaming">🎮 Gaming</option>
-          <option value="home">🏠 Home</option>
-        </select>
+    <div class="search-wrap">
+      <div class="search-eyebrow">search query</div>
+      <div class="search-field">
+        <input class="search-inp" id="qInput"
+          placeholder='AND  OR  NOT  "phrase"  fuzzy~  wild*'
+          onkeydown="if(event.key==='Enter')doSearch()"/>
+        <button class="search-clear" onclick="clearSearch()">x</button>
+        <button class="search-go" onclick="doSearch()">Search</button>
       </div>
-      <div class="flt"><label>File Type</label>
-        <select id="filterFileType">
-          <option value="">All Types</option>
-          <option value="json">JSON</option>
-          <option value="csv">CSV</option>
-          <option value="txt">TXT</option>
-          <option value="pdf">PDF</option>
-          <option value="xlsx">Excel</option>
-        </select>
+
+      <div class="chips">
+        <span class="chip" onclick="q('Apple AND camera')">Apple AND camera</span>
+        <span class="chip" onclick="q('Samsung OR Sony')">Samsung OR Sony</span>
+        <span class="chip" onclick="q('NOT gaming')">NOT gaming</span>
+        <span class="chip" onclick='q("&quot;noise cancelling&quot;")'>"noise cancelling"</span>
+        <span class="chip" onclick="q('lapto*')">lapto*</span>
+        <span class="chip" onclick="q('Samsng~')">Samsng~</span>
+        <span class="chip" onclick="q('(Apple OR Samsung) AND camera')">(Apple OR Samsung) AND camera</span>
       </div>
-      <div class="flt"><label>Min Price (EGP)</label><input type="number" id="filterMinPrice" placeholder="0"/></div>
-      <div class="flt"><label>Max Price (EGP)</label><input type="number" id="filterMaxPrice" placeholder="any"/></div>
-      <div class="flt"><label>Date From</label><input type="date" id="filterDateFrom"/></div>
-      <div class="flt"><label>Date To</label><input type="date" id="filterDateTo"/></div>
+
+      <div class="filters">
+        <div class="flt"><label>Category</label>
+          <select id="fCat">
+            <option value="">All</option>
+            <option value="phones">Phones</option>
+            <option value="laptops">Laptops</option>
+            <option value="headphones">Headphones</option>
+            <option value="shoes">Shoes</option>
+            <option value="tvs">TVs</option>
+            <option value="tablets">Tablets</option>
+            <option value="cameras">Cameras</option>
+            <option value="watches">Watches</option>
+            <option value="gaming">Gaming</option>
+            <option value="home">Home</option>
+            <option value="components">Components</option>
+            <option value="storage">Storage</option>
+            <option value="monitors">Monitors</option>
+            <option value="accessories">Accessories</option>
+          </select>
+        </div>
+        <div class="flt"><label>File Type</label>
+          <select id="fType">
+            <option value="">All</option>
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+            <option value="txt">TXT</option>
+            <option value="pdf">PDF</option>
+            <option value="xlsx">Excel</option>
+          </select>
+        </div>
+        <div class="flt"><label>Min Price</label><input type="number" id="fMin" placeholder="0"/></div>
+        <div class="flt"><label>Max Price</label><input type="number" id="fMax" placeholder="any"/></div>
+        <div class="flt"><label>Date From</label><input type="date" id="fFrom"/></div>
+        <div class="flt"><label>Date To</label><input type="date" id="fTo"/></div>
+      </div>
     </div>
     <div id="resultsArea"></div>
   </div>
 
   <!-- STATS -->
   <div class="panel" id="panel-stats">
-    <div id="statsArea"><div class="spinner"><div class="spin-ring"></div><span>Loading stats...</span></div></div>
+    <div id="statsArea">
+      <div class="spinner"><div class="spin"></div><span class="spin-label">loading</span></div>
+    </div>
   </div>
 
 </div>
 
 <script>
-const API="http://localhost:8000";
-let lastQuery="";
-let selectedFormats=new Set(["json","csv","txt","pdf","xlsx"]);
+const API = "http://localhost:8000";
+let lastQ = "";
+let fmts = new Set(["json","csv","txt","pdf","xlsx"]);
 
-function switchTab(name){
-  document.querySelectorAll(".nav-tab").forEach(t=>t.classList.remove("active"));
+function switchTab(n){
+  document.querySelectorAll(".nav-item").forEach(t=>t.classList.remove("active"));
   document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
-  document.getElementById("tab-"+name).classList.add("active");
-  document.getElementById("panel-"+name).classList.add("active");
-  if(name==="stats") loadStats();
+  document.getElementById("tab-"+n).classList.add("active");
+  document.getElementById("panel-"+n).classList.add("active");
+  if(n==="stats") loadStats();
 }
 
 async function checkStatus(){
@@ -285,215 +508,251 @@ async function checkStatus(){
     const r=await fetch(API+"/index-info");
     const d=await r.json();
     if(d.status==="connected"){
-      document.getElementById("statusLed").className="status-led on";
-      document.getElementById("statusText").textContent=`ES · ${d.doc_count} docs · ${(d.size_bytes/1024).toFixed(0)}KB`;
+      document.getElementById("led").className="led on";
+      document.getElementById("statusText").textContent=`${d.doc_count} docs / ${(d.size_bytes/1024).toFixed(0)}kb`;
     }else throw 0;
   }catch{
-    document.getElementById("statusLed").className="status-led";
+    document.getElementById("led").className="led";
     document.getElementById("statusText").textContent="disconnected";
   }
 }
 
-function toggleFormat(el){
-  const fmt=el.dataset.fmt;
-  if(selectedFormats.has(fmt)){selectedFormats.delete(fmt);el.classList.remove("selected")}
-  else{selectedFormats.add(fmt);el.classList.add("selected")}
+function toggleFmt(el){
+  const f=el.dataset.fmt;
+  if(fmts.has(f)){fmts.delete(f);el.classList.remove("on")}
+  else{fmts.add(f);el.classList.add("on")}
 }
 
-function log(msg,color="var(--success)"){
+function addLog(msg,col="#a8c96e"){
   const box=document.getElementById("buildLog");
   box.classList.add("show");
-  const line=document.createElement("div");
-  line.className="log-line";line.style.color=color;line.textContent="› "+msg;
-  box.appendChild(line);box.scrollTop=box.scrollHeight;
+  const ln=document.createElement("div");
+  ln.className="log-ln";ln.style.color=col;ln.textContent="  "+msg;
+  box.appendChild(ln);box.scrollTop=box.scrollHeight;
 }
 
-async function buildIndex(rebuild=false){
-  if(selectedFormats.size===0){toast("Select at least one format!","var(--accent2)");return}
+async function build(rebuild=false){
+  if(!fmts.size){alert("Select at least one format");return}
   document.getElementById("buildLog").innerHTML="";
   document.getElementById("buildLog").classList.add("show");
   document.getElementById("buildSummary").innerHTML="";
-  document.getElementById("buildStatus").textContent="Building...";
-  log(`${rebuild?"Rebuilding":"Building"} index...`);
-  log(`Selected formats: ${[...selectedFormats].join(", ")}`);
+  document.getElementById("buildStatus").textContent="working...";
+
+  addLog(`${rebuild?"Rebuild":"Build"} started`);
+  addLog(`Formats: ${[...fmts].join(", ")}`);
+
   try{
-    const r=await fetch(API+"/index-info");
-    const d=await r.json();
-    if(d.status==="connected"){
-      log("Connected to Elasticsearch ✓");
-      log(`Documents indexed: ${d.doc_count}`);
-      log(`Index size: ${(d.size_bytes/1024).toFixed(1)} KB`);
-      log(`Active formats: ${[...selectedFormats].join(", ")}`);
-      log("Status: READY ✓","var(--accent)");
-      document.getElementById("buildStatus").textContent="✓ Done";
-      const s=await fetch(API+"/stats");
-      const sd=await s.json();
-      renderBuildSummary(sd);
-    }else{
-      log("Error: Cannot connect to Elasticsearch","var(--accent2)");
-      log("Make sure docker-compose and uvicorn are running","var(--gold)");
+    // بيبعت للـ /rebuild الحقيقي مع الـ formats
+    const r = await fetch(API+"/rebuild", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify([...fmts])
+    });
+    const d = await r.json();
+    if(d.status==="success"){
+      addLog(`Indexed ${d.total} documents`);
+      Object.entries(d.by_type).forEach(([k,v]) => addLog(`  ${k}: ${v} docs`));
+      addLog("Ready", "#22a89a");
+      document.getElementById("buildStatus").textContent="done";
+      showSummary(d);
+    } else {
+      addLog("Error: " + (d.message||"unknown"), "#c0392b");
     }
-  }catch{
-    log("Error: Backend not reachable","var(--accent2)");
-    log("Run: uvicorn backend.main:app --reload","var(--gold)");
+  } catch {
+    addLog("Backend not reachable", "#c0392b");
+    addLog("Run: uvicorn backend.main:app --reload", "#8b6914");
   }
   checkStatus();
 }
-
-function renderBuildSummary(data){
-  if(data.error)return;
-  const types=Object.entries(data.by_file_type||{});
-  const cats=Object.entries(data.by_category||{});
+function showSummary(d){
   document.getElementById("buildSummary").innerHTML=`
-  <div style="background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px">
-    <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:var(--muted);margin-bottom:16px">INDEX SUMMARY</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
-      <div><div style="color:var(--muted);font-size:11px;letter-spacing:1px;margin-bottom:8px">TOTAL DOCS</div>
-        <div style="font-family:'Space Mono',monospace;font-size:28px;color:var(--accent)">${data.total_documents}</div></div>
-      <div><div style="color:var(--muted);font-size:11px;letter-spacing:1px;margin-bottom:8px">FILE TYPES</div>
-        <div style="font-size:13px;line-height:2">${types.map(([k,v])=>`<span style="margin-right:10px">${k}: <b style="color:var(--accent)">${v}</b></span>`).join("")||"—"}</div></div>
-      <div><div style="color:var(--muted);font-size:11px;letter-spacing:1px;margin-bottom:8px">CATEGORIES</div>
-        <div style="font-size:13px;line-height:2">${cats.map(([k,v])=>`<span style="margin-right:10px">${k}: <b style="color:var(--accent)">${v}</b></span>`).join("")||"—"}</div></div>
+  <div class="summary-box">
+    <div class="summary-title">Index Summary</div>
+    <div class="summary-grid">
+      <div>
+        <div class="summary-label">Total Documents</div>
+        <div class="summary-val">${d.total}</div>
+      </div>
+      <div>
+        <div class="summary-label">File Types</div>
+        <div class="summary-list">${Object.entries(d.by_type).map(([k,v])=>`${k}: ${v}`).join("<br>")}</div>
+      </div>
+      <div>
+        <div class="summary-label">Formats Indexed</div>
+        <div class="summary-list">${d.formats.join(", ")}</div>
+      </div>
     </div>
   </div>`;
 }
 
-function q(txt){document.getElementById("queryInput").value=txt}
+function q(v){document.getElementById("qInput").value=v}
 
 async function doSearch(page=1){
-  const qv=document.getElementById("queryInput").value.trim();
+  const qv=document.getElementById("qInput").value.trim();
   if(!qv)return;
-  lastQuery=qv;
+  lastQ=qv;
   const p=new URLSearchParams({q:qv,page,size:5});
-  const cat=document.getElementById("filterCategory").value;
-  const ftype=document.getElementById("filterFileType").value;
-  const minP=document.getElementById("filterMinPrice").value;
-  const maxP=document.getElementById("filterMaxPrice").value;
-  const dFrom=document.getElementById("filterDateFrom").value;
-  const dTo=document.getElementById("filterDateTo").value;
-  if(cat) p.append("category",cat);
-  if(ftype) p.append("file_type",ftype);
-  if(minP) p.append("min_price",minP);
-  if(maxP) p.append("max_price",maxP);
-  if(dFrom) p.append("date_from",dFrom);
-  if(dTo) p.append("date_to",dTo);
-  document.getElementById("resultsArea").innerHTML='<div class="spinner"><div class="spin-ring"></div><span>Searching...</span></div>';
+  const cat=document.getElementById("fCat").value;
+  const ft=document.getElementById("fType").value;
+  const mn=document.getElementById("fMin").value;
+  const mx=document.getElementById("fMax").value;
+  const df=document.getElementById("fFrom").value;
+  const dt=document.getElementById("fTo").value;
+  if(cat)p.append("category",cat);
+  if(ft)p.append("file_type",ft);
+  if(mn)p.append("min_price",mn);
+  if(mx)p.append("max_price",mx);
+  if(df)p.append("date_from",df);
+  if(dt)p.append("date_to",dt);
+
+  document.getElementById("resultsArea").innerHTML=
+    '<div class="spinner"><div class="spin"></div><span class="spin-label">searching</span></div>';
+
   try{
     const res=await fetch(`${API}/search?${p}`);
     const data=await res.json();
     renderResults(data);
   }catch{
-    document.getElementById("resultsArea").innerHTML=`<div class="no-results"><div class="nr-icon">⚠️</div><h3>Backend unreachable</h3><p>Run: uvicorn backend.main:app --reload</p></div>`;
+    document.getElementById("resultsArea").innerHTML=
+      '<div class="no-res"><div class="no-res-icon">!</div><h3>Backend unreachable</h3><p>uvicorn backend.main:app --reload</p></div>';
   }
 }
 
 function renderResults(data){
   const area=document.getElementById("resultsArea");
-  if(data.error){area.innerHTML=`<div class="no-results"><div class="nr-icon">⚠️</div><h3>Error</h3><p>${data.error}</p></div>`;return}
+  if(data.error){area.innerHTML=`<div class="no-res"><div class="no-res-icon">!</div><h3>Error</h3><p>${data.error}</p></div>`;return}
   let html="";
+
   if(data.suggestion){
-    const clean=data.suggestion.replace(/<[^>]*>/g,"");
-    html+=`<div class="dym">💡 Did you mean: <a onclick="q('${clean}');doSearch()">${clean}</a>?</div>`;
+    const c=data.suggestion.replace(/<[^>]*>/g,"");
+    html+=`<div class="dym">Did you mean: <a onclick="q('${c}');doSearch()">${c}</a>?</div>`;
   }
+
   if(data.total>0){
-    html+=`<div class="results-header">
-      <div class="results-count"><span class="num">${data.total}</span> result${data.total>1?"s":""} found</div>
-      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted)">PAGE ${data.page} / ${data.total_pages}</div>
+    html+=`<div class="res-header">
+      <div class="res-count"><strong>${data.total}</strong> result${data.total>1?"s":""}</div>
+      <div class="res-page">page ${data.page} of ${data.total_pages}</div>
     </div>`;
   }
-  if(data.results.length===0){
-    html+=`<div class="no-results"><div class="nr-icon">🔍</div><h3>No results</h3><p>No matches for "<strong>${esc(lastQuery)}</strong>"</p></div>`;
+
+  if(!data.results.length){
+    html+=`<div class="no-res"><div class="no-res-icon">0</div><h3>No results</h3><p>Nothing matched "${esc(lastQ)}"</p></div>`;
     area.innerHTML=html;return;
   }
+
   data.results.forEach(r=>{
-    html+=`<div class="result-card">
-      <div class="rc-top">
-        <div class="rc-title">${r.highlight_name||esc(r.name||"")}</div>
-        <div class="rc-score">★ ${r.score}</div>
+    html+=`<div class="card">
+      <div class="card-top">
+        <div class="card-title">${r.highlight_name||esc(r.name||"")}</div>
+        <div class="card-score">score ${r.score}</div>
       </div>
-      <div class="rc-desc">${r.highlight_desc||esc(r.description||"")}</div>
-      <div class="rc-meta">
-        ${r.price?`<span class="badge badge-price">💰 ${r.price.toLocaleString()} EGP</span>`:""}
-        ${r.category?`<span class="badge badge-cat">▸ ${r.category}</span>`:""}
-        ${r.brand?`<span class="badge badge-brand">◈ ${r.brand}</span>`:""}
-        ${r.file_type?`<span class="badge badge-type">${ficon(r.file_type)} ${r.file_type.toUpperCase()}</span>`:""}
-        ${r.mod_date?`<span class="badge badge-date">📅 ${r.mod_date}</span>`:""}
+      <div class="card-desc">${r.highlight_desc||esc((r.description||"").substring(0,200))}</div>
+      <div class="card-meta">
+        ${r.price?`<span class="tag tag-price">${r.price.toLocaleString()} EGP</span>`:""}
+        ${r.category?`<span class="tag tag-cat">${r.category}</span>`:""}
+        ${r.brand?`<span class="tag tag-brand">${r.brand}</span>`:""}
+        ${r.file_type?`<span class="tag">.${r.file_type}</span>`:""}
+        ${r.filename&&r.filename!==r.name?`<span class="tag">${r.filename}</span>`:""}
+        ${r.mod_date?`<span class="tag">${r.mod_date}</span>`:""}
       </div>
     </div>`;
   });
+
   if(data.total_pages>1){
     html+=`<div class="pagination">`;
-    html+=`<button class="pg-btn pg-arrow" onclick="doSearch(${data.page-1})" ${data.page<=1?"disabled":""}>←</button>`;
-    for(let p=Math.max(1,data.page-2);p<=Math.min(data.total_pages,data.page+2);p++){
-      html+=`<button class="pg-btn ${p===data.page?"active":""}" onclick="doSearch(${p})">${p}</button>`;
-    }
-    html+=`<button class="pg-btn pg-arrow" onclick="doSearch(${data.page+1})" ${data.page>=data.total_pages?"disabled":""}>→</button>`;
+    html+=`<button class="pg pg-arr" onclick="doSearch(${data.page-1})" ${data.page<=1?"disabled":""}>prev</button>`;
+    for(let i=Math.max(1,data.page-2);i<=Math.min(data.total_pages,data.page+2);i++)
+      html+=`<button class="pg ${i===data.page?"cur":""}" onclick="doSearch(${i})">${i}</button>`;
+    html+=`<button class="pg pg-arr" onclick="doSearch(${data.page+1})" ${data.page>=data.total_pages?"disabled":""}>next</button>`;
     html+=`</div>`;
   }
   area.innerHTML=html;
 }
 
 async function loadStats(){
-  document.getElementById("statsArea").innerHTML='<div class="spinner"><div class="spin-ring"></div><span>Loading...</span></div>';
+  document.getElementById("statsArea").innerHTML=
+    '<div class="spinner"><div class="spin"></div><span class="spin-label">loading</span></div>';
   try{
     const res=await fetch(API+"/stats");
     const data=await res.json();
     renderStats(data);
   }catch{
-    document.getElementById("statsArea").innerHTML='<div class="no-results"><div class="nr-icon">⚠️</div><h3>Backend unreachable</h3></div>';
+    document.getElementById("statsArea").innerHTML=
+      '<div class="no-res"><div class="no-res-icon">!</div><h3>Backend unreachable</h3></div>';
   }
 }
 
 function renderStats(data){
-  if(data.error){document.getElementById("statsArea").innerHTML=`<div class="no-results"><div class="nr-icon">⚠️</div><h3>${data.error}</h3></div>`;return}
-  const byType=data.by_file_type||{};
-  const byCat=data.by_category||{};
-  const maxT=Math.max(...Object.values(byType),1);
-  const maxC=Math.max(...Object.values(byCat),1);
+  if(data.error){
+    document.getElementById("statsArea").innerHTML=
+      `<div class="no-res"><div class="no-res-icon">!</div><h3>${data.error}</h3></div>`;
+    return;
+  }
+  const bt=data.by_file_type||{};
+  const bc=data.by_category||{};
+  const mt=Math.max(...Object.values(bt),1);
+  const mc=Math.max(...Object.values(bc),1);
+
   document.getElementById("statsArea").innerHTML=`
-  <div class="stats-kpi">
-    <div class="kpi"><div class="kpi-label">Total Documents</div><div class="kpi-value">${data.total_documents}</div><div class="kpi-sub">indexed files</div></div>
-    <div class="kpi"><div class="kpi-label">File Formats</div><div class="kpi-value">${Object.keys(byType).length}</div><div class="kpi-sub">format types</div></div>
-    <div class="kpi"><div class="kpi-label">Categories</div><div class="kpi-value">${Object.keys(byCat).length}</div><div class="kpi-sub">product categories</div></div>
+  <div class="section-head" style="margin-bottom:28px">
+    <div class="section-title">Index Statistics</div>
   </div>
-  <div class="stats-grid2">
-    <div class="stat-block">
-      <div class="stat-block-title">📁 By File Type</div>
-      ${Object.entries(byType).map(([k,v])=>`<div class="breakdown-item">
-        <div class="breakdown-key">${ficon(k)} ${k.toUpperCase()}</div>
-        <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${Math.round(v/maxT*100)}%"></div></div>
-        <div class="breakdown-count">${v}</div>
-      </div>`).join("")||'<div style="color:var(--muted);font-size:13px">No data</div>'}
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Total Documents</div>
+      <div class="kpi-val">${data.total_documents}</div>
+      <div class="kpi-sub">across all files</div>
     </div>
-    <div class="stat-block">
-      <div class="stat-block-title">🗂️ By Category</div>
-      ${Object.entries(byCat).map(([k,v])=>`<div class="breakdown-item">
-        <div class="breakdown-key">${k}</div>
-        <div class="breakdown-bar-wrap"><div class="breakdown-bar" style="width:${Math.round(v/maxC*100)}%"></div></div>
-        <div class="breakdown-count">${v}</div>
-      </div>`).join("")||'<div style="color:var(--muted);font-size:13px">No data</div>'}
+    <div class="kpi">
+      <div class="kpi-label">File Formats</div>
+      <div class="kpi-val">${Object.keys(bt).length}</div>
+      <div class="kpi-sub">indexed types</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Categories</div>
+      <div class="kpi-val">${Object.keys(bc).length}</div>
+      <div class="kpi-sub">distinct values</div>
     </div>
   </div>
-  <div class="stat-block">
-    <div class="stat-block-title">🔤 Top 10 Most Frequent Terms</div>
-    ${data.top_terms&&data.top_terms.length>0
-      ?`<div class="terms-cloud">${data.top_terms.map(t=>`<div class="term-tag">${t.term}<span class="term-tag-count">${t.count}</span></div>`).join("")}</div>`
-      :`<div class="no-terms">// significant_text analysis requires larger dataset<br>// top terms appear when index has diverse content</div>`}
+
+  <div class="stats-cols">
+    <div class="stat-panel">
+      <div class="stat-panel-title">By File Type</div>
+      ${Object.entries(bt).map(([k,v])=>`
+      <div class="bar-row">
+        <div class="bar-key">.${k}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mt*100)}%"></div></div>
+        <div class="bar-n">${v}</div>
+      </div>`).join("")||'<div class="no-terms">no data</div>'}
+    </div>
+    <div class="stat-panel">
+      <div class="stat-panel-title">By Category</div>
+      ${Object.entries(bc).map(([k,v])=>`
+      <div class="bar-row">
+        <div class="bar-key">${k}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/mc*100)}%"></div></div>
+        <div class="bar-n">${v}</div>
+      </div>`).join("")||'<div class="no-terms">no data</div>'}
+    </div>
+  </div>
+
+  <div class="terms-panel">
+    <div class="stat-panel-title">Top 10 Frequent Terms</div>
+    ${data.top_terms&&data.top_terms.length
+      ?`<div class="terms-wrap">${data.top_terms.map(t=>`
+        <div class="term">${t.term}<span class="term-n">${t.count}</span></div>`).join("")}</div>`
+      :`<div class="no-terms">not enough data for term analysis</div>`}
   </div>`;
 }
 
 function clearSearch(){
-  document.getElementById("queryInput").value="";
-  ["filterCategory","filterFileType"].forEach(id=>document.getElementById(id).value="");
-  ["filterMinPrice","filterMaxPrice","filterDateFrom","filterDateTo"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("qInput").value="";
+  ["fCat","fType"].forEach(id=>document.getElementById(id).value="");
+  ["fMin","fMax","fFrom","fTo"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("resultsArea").innerHTML="";
 }
+
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
-function ficon(t){return{json:"📋",csv:"📊",txt:"📄",pdf:"📕",xlsx:"📗"}[t]||"📁"}
-function toast(msg,color="var(--accent)"){
-  const el=document.createElement("div");el.className="toast";el.style.borderLeftColor=color;el.textContent=msg;
-  document.body.appendChild(el);setTimeout(()=>el.remove(),3000);
-}
 
 checkStatus();
 setInterval(checkStatus,15000);

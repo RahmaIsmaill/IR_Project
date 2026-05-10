@@ -1,13 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from elasticsearch import Elasticsearch
-import json, os, csv, glob, datetime
-from typing import Optional
+import json, os, csv, glob, datetime, re
+from typing import Optional, List
 
 app = FastAPI(title="Mini Search Engine")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
-# ===================== CONFIG =====================
 ES_HOST     = os.getenv("ES_HOST", "http://localhost:9200")
 ES_USER     = os.getenv("ES_USER", "")
 ES_PASS     = os.getenv("ES_PASS", "")
@@ -23,7 +22,6 @@ else:
 INDEX    = "products"
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 
-# ===================== MAPPING =====================
 MAPPING = {
     "mappings": {
         "properties": {
@@ -41,7 +39,7 @@ MAPPING = {
     "settings": {"index": {"number_of_shards": 1, "number_of_replicas": 0}}
 }
 
-# ===================== FILE PARSERS =====================
+# ── PARSERS ──────────────────────────────────────────────
 def get_mod_date(path):
     return datetime.datetime.fromtimestamp(os.path.getmtime(path)).strftime("%Y-%m-%d")
 
@@ -90,8 +88,10 @@ def parse_pdf(path):
         import fitz
         doc  = fitz.open(path)
         text = " ".join(page.get_text() for page in doc)
+    except ImportError:
+        text = "[PDF: install PyMuPDF — pip install PyMuPDF]"
     except Exception as e:
-        text = f"[PDF: {os.path.basename(path)}]"
+        text = f"[PDF error: {e}]"
     return [{"name": os.path.basename(path), "description": text[:300],
              "content": text, "file_type": "pdf",
              "filename": os.path.basename(path), "mod_date": get_mod_date(path)}]
@@ -134,30 +134,49 @@ def collect_docs(formats=None):
             try:
                 parsed = PARSERS[fmt](path)
                 docs.extend(parsed)
-                print(f"  ✅ {os.path.basename(path)} → {len(parsed)} doc(s)")
+                print(f"  {os.path.basename(path)} -> {len(parsed)} doc(s)")
             except Exception as e:
-                print(f"  ❌ {os.path.basename(path)}: {e}")
+                print(f"  ERROR {os.path.basename(path)}: {e}")
     return docs
 
-# ===================== STARTUP =====================
+def do_index(formats=None):
+    if es.indices.exists(index=INDEX):
+        es.indices.delete(index=INDEX)
+    es.indices.create(index=INDEX, body=MAPPING)
+    docs = collect_docs(formats)
+    for i, doc in enumerate(docs):
+        if "price" in doc:
+            try:    doc["price"] = int(float(str(doc["price"]).replace(",", "")))
+            except: del doc["price"]
+        es.index(index=INDEX, id=i, document=doc)
+    es.indices.refresh(index=INDEX)
+    return docs
+
+# ── STARTUP ──────────────────────────────────────────────
 @app.on_event("startup")
 def load_data():
     try:
-        if es.indices.exists(index=INDEX):
-            es.indices.delete(index=INDEX)
-        es.indices.create(index=INDEX, body=MAPPING)
-        docs = collect_docs()
-        for i, doc in enumerate(docs):
-            if "price" in doc:
-                try:    doc["price"] = int(float(str(doc["price"]).replace(",", "")))
-                except: del doc["price"]
-            es.index(index=INDEX, id=i, document=doc)
-        es.indices.refresh(index=INDEX)
-        print(f"✅ Indexed {len(docs)} documents total")
+        docs = do_index()
+        print(f"Indexed {len(docs)} documents total")
     except Exception as e:
-        print(f"❌ Startup error: {e}")
+        print(f"Startup error: {e}")
 
-# ===================== SEARCH =====================
+# ── REBUILD ──────────────────────────────────────────────
+@app.post("/rebuild")
+def rebuild(formats: Optional[List[str]] = None):
+    try:
+        selected = formats if formats else list(PARSERS.keys())
+        docs     = do_index(selected)
+        summary  = {}
+        for d in docs:
+            ft = d.get("file_type", "unknown")
+            summary[ft] = summary.get(ft, 0) + 1
+        return {"status": "success", "total": len(docs),
+                "formats": selected, "by_type": summary}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+# ── SEARCH ───────────────────────────────────────────────
 @app.get("/search")
 def search(
     q: str,
@@ -220,7 +239,8 @@ def search(
             src = hit["_source"]
             hlt = hit.get("highlight", {})
             hn  = hlt.get("name", [src.get("name", "")])[0]
-            hd  = hlt.get("description", hlt.get("content", [src.get("description", src.get("content", ""))]))[0]
+            hd  = hlt.get("description", hlt.get("content",
+                  [src.get("description", src.get("content", ""))]))[0]
             results.append({
                 "name":           src.get("name"),
                 "description":    src.get("description") or src.get("content", "")[:200],
@@ -235,7 +255,6 @@ def search(
                 "highlight_desc": hd
             })
 
-        # Did You Mean?
         suggestion = None
         if total == 0:
             try:
@@ -245,15 +264,19 @@ def search(
                 for token in t_res.get("suggest", {}).get("term_suggest", []):
                     opts = token.get("options", [])
                     parts.append(opts[0]["text"] if opts else token["text"])
-                if parts: suggestion = " ".join(parts)
-            except: pass
+                candidate = " ".join(parts)
+                if candidate.lower() != q.lower():
+                    suggestion = candidate
+            except:
+                pass
 
-        return {"total": total, "page": page, "total_pages": (total + size - 1) // size,
+        return {"total": total, "page": page,
+                "total_pages": (total + size - 1) // size,
                 "results": results, "suggestion": suggestion}
     except Exception as e:
         return {"error": str(e), "total": 0, "results": [], "page": 1, "total_pages": 0}
 
-# ===================== STATS =====================
+# ── STATS ────────────────────────────────────────────────
 @app.get("/stats")
 def stats():
     try:
@@ -265,44 +288,48 @@ def stats():
         by_type     = {b["key"]: b["doc_count"] for b in agg["aggregations"]["by_type"]["buckets"]}
         by_category = {b["key"]: b["doc_count"] for b in agg["aggregations"]["by_category"]["buckets"]}
 
-        # Top 10 terms — use terms agg on name field (works reliably)
+        # Top 10 frequent terms — real word frequency counted in Python
         top_terms = []
         try:
-            # Try significant_text first
-            sig = es.search(index=INDEX, body={"size": 0, "query": {"match_all": {}},
-                "aggs": {"top_words": {"significant_text": {"field": "content", "size": 10}}}})
-            top_terms = [{"term": b["key"], "count": b["doc_count"]}
-                         for b in sig["aggregations"]["top_words"]["buckets"]]
-        except:
+            hits = es.search(index=INDEX, body={
+                "query": {"match_all": {}},
+                "size": 500,
+                "_source": ["name", "description"]
+            })["hits"]["hits"]
+
+            STOP = {
+                "the","a","an","and","or","of","in","to","for","with","on","at","by",
+                "from","is","are","was","were","be","been","has","have","had","it",
+                "its","as","this","that","not","but","can","will","all","also","more",
+                "than","their","they","which","when","who","so","if","about","into",
+                "up","out","do","does","did","some","any","each","over","after","new",
+                "one","two","three","per","via","inc","get","set","use","used","very",
+            }
+
+            freq = {}
+            for h in hits:
+                src  = h["_source"]
+                text = " ".join(filter(None, [
+                    str(src.get("name", "")),
+                    str(src.get("description", ""))
+                ]))
+                for w in re.findall(r"[a-zA-Z]{3,}", text.lower()):
+                    if w not in STOP and not re.match(r"^user_?\d+$", w):
+                        freq[w] = freq.get(w, 0) + 1
+
+            top_terms = [
+                {"term": w, "count": c}
+                for w, c in sorted(freq.items(), key=lambda x: -x[1])[:10]
+            ]
+        except Exception:
             pass
-
-        if not top_terms:
-            try:
-                # Fallback: sampler + significant_text on description
-                sig2 = es.search(index=INDEX, body={"size": 0, "query": {"match_all": {}},
-                    "aggs": {"sample": {"sampler": {"shard_size": 100}, "aggs": {
-                        "top_words": {"significant_text": {"field": "description", "size": 10}}}}}})
-                top_terms = [{"term": b["key"], "count": b["doc_count"]}
-                             for b in sig2["aggregations"]["sample"]["top_words"]["buckets"]]
-            except:
-                pass
-
-        if not top_terms:
-            try:
-                # Final fallback: terms agg on name.keyword split
-                fr = es.search(index=INDEX, body={"size": 0,
-                    "aggs": {"top_names": {"terms": {"field": "name.keyword", "size": 10}}}})
-                top_terms = [{"term": b["key"], "count": b["doc_count"]}
-                             for b in fr["aggregations"]["top_names"]["buckets"]]
-            except:
-                pass
 
         return {"total_documents": total, "by_file_type": by_type,
                 "by_category": by_category, "top_terms": top_terms}
     except Exception as e:
         return {"error": str(e)}
 
-# ===================== INDEX INFO =====================
+# ── INDEX INFO ───────────────────────────────────────────
 @app.get("/index-info")
 def index_info():
     try:
@@ -312,4 +339,3 @@ def index_info():
                 "size_bytes": info["indices"][INDEX]["total"]["store"]["size_in_bytes"]}
     except Exception as e:
         return {"status": "error", "message": str(e)}
-//
