@@ -8,16 +8,16 @@ This project implements a comprehensive Information Retrieval system combining P
 
 ## Tech Stack
 
-- **Backend**: Python (28.3%)
-- **Frontend**: HTML (71.7%)
+- **Backend**: Python 
+- **Frontend**: HTML
 
 ## Features
 
-- 📄 Document indexing and storage
-- 🔍 Full-text search capabilities
-- 📊 Relevance ranking and scoring
-- 🌐 Web-based user interface
-- ⚡ Fast query processing
+- Document indexing and storage
+- Full-text search capabilities
+- Relevance ranking and scoring
+- Web-based user interface
+- Fast query processing
 
 ## Project Structure
 
@@ -65,30 +65,4 @@ IR_Project/
 
 1. **Index Documents**: Upload or index your document collection
 2. **Search**: Enter queries in the search interface
-3. **View Results**: Browse ranked results with relevance scores
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Author
-
-**Rahma Ismaill** - [GitHub Profile](https://github.com/RahmaIsmaill)
-
-## Support
-
-For questions or issues, please open an [GitHub Issue](https://github.com/RahmaIsmaill/IR_Project/issues).
-
----
-
-**Last Updated**: May 2026
+3. **View Results**: Browse ranked results with relevance 
