@@ -29,4 +29,18 @@
   {"name": "Xbox Series X", "description": "Microsoft gaming console, 12 teraflops GPU, 4K 120fps, Quick Resume, Game Pass", "price": 17000, "category": "gaming", "brand": "Microsoft"},
   {"name": "Nintendo Switch OLED", "description": "Hybrid gaming console, 7 inch OLED screen, handheld and TV modes, Joy-Con controllers", "price": 12000, "category": "gaming", "brand": "Nintendo"},
   {"name": "Dyson V15 Detect", "description": "Cordless vacuum cleaner, laser dust detection, HEPA filtration, 60 min battery, LCD screen", "price": 16000, "category": "home", "brand": "Dyson"}
+  ,{"name": "CeraVe Hydrating Cleanser", "description": "Gentle face cleanser with ceramides and hyaluronic acid for normal to dry skin", "price": 600, "category": "skincare", "brand": "CeraVe"},
+  {"name": "CeraVe Foaming Cleanser", "description": "Foaming facial cleanser for oily skin, removes dirt and excess oil without drying", "price": 650, "category": "skincare", "brand": "CeraVe"},
+  {"name": "La Roche-Posay Effaclar Gel", "description": "Deep cleansing gel for oily and acne-prone skin, reduces excess sebum", "price": 750, "category": "skincare", "brand": "La Roche-Posay"},
+  {"name": "The Ordinary Niacinamide 10%", "description": "Serum reduces pores, controls oil, improves skin texture and brightness", "price": 500, "category": "skincare", "brand": "The Ordinary"},
+  {"name": "The Ordinary Hyaluronic Acid 2%", "description": "Hydrating serum that plumps skin and retains moisture", "price": 520, "category": "skincare", "brand": "The Ordinary"},
+  {"name": "Neutrogena Hydro Boost Water Gel", "description": "Lightweight moisturizer with hyaluronic acid for deep hydration", "price": 700, "category": "skincare", "brand": "Neutrogena"},
+  {"name": "Nivea Soft Cream", "description": "Light moisturizing cream for face, body, and hands with vitamin E and jojoba oil", "price": 200, "category": "skincare", "brand": "Nivea"},
+  {"name": "Garnier Micellar Water", "description": "Makeup remover and cleanser for sensitive skin, removes impurities gently", "price": 300, "category": "skincare", "brand": "Garnier"},
+  {"name": "La Roche-Posay Sunscreen SPF 50+", "description": "High protection sunscreen for sensitive skin, UVA/UVB protection, non-greasy", "price": 900, "category": "skincare", "brand": "La Roche-Posay"},
+  {"name": "Bioderma Sensibio H2O", "description": "Micellar water for sensitive skin, removes makeup and soothes skin", "price": 850, "category": "skincare", "brand": "Bioderma"},
+  {"name": "COSRX Acne Pimple Master Patch", "description": "Hydrocolloid patches that treat acne and absorb impurities overnight", "price": 300, "category": "skincare", "brand": "COSRX"},
+  {"name": "Paula's Choice 2% BHA Liquid", "description": "Exfoliating toner that clears pores, reduces blackheads and acne", "price": 1200, "category": "skincare", "brand": "Paula's Choice"},
+  {"name": "Drunk Elephant Protini Cream", "description": "Peptide-rich moisturizer that improves skin firmness and elasticity", "price": 2500, "category": "skincare", "brand": "Drunk Elephant"},
+  {"name": "Vaseline Petroleum Jelly", "description": "Multi-purpose skin protectant for dry and damaged skin", "price": 120, "category": "skincare", "brand": "Vaseline"}
 ]
