@@ -107,7 +107,7 @@ Each file type is converted into searchable documents as follows:
 
 3. Run the application:
    ```bash
-   python app.py
+   python main.py
    ```
 
 4. Open your browser and navigate to `http://localhost:5000`
