@@ -31,7 +31,12 @@ IR_Project/
 ├── frontend/                    # Frontend files
 │   └── index.html               # Main frontend page
 │
-├── data/                        # Document collections / datasets
+├── data/                    # Dataset files (indexed documents)
+│   ├── *.json
+│   ├── *.csv
+│   ├── *.txt
+│   ├── *.pdf
+│   ├── *.xlsx
 │
 ├── README.md                    # Project documentation
 └── docker-compose.yml           # Docker configuration
