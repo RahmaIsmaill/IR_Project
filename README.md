@@ -11,14 +11,6 @@ This project implements a comprehensive Information Retrieval system combining P
 - **Backend**: Python 
 - **Frontend**: HTML
 
-## Features
-
-- Document indexing and storage
-- Full-text search capabilities
-- Relevance ranking and scoring
-- Web-based user interface
-- Fast query processing
-
 ## Project Structure
 
 ```bash
@@ -42,6 +34,57 @@ IR_Project/
 └── docker-compose.yml           # Docker configuration
 ```
 
+ Features
+
+ Indexing  
+Supports multiple file formats: JSON, CSV, TXT, PDF, Excel (.xlsx).  
+Each file is parsed into searchable documents.  
+Rebuild or reindex data anytime.
+
+ Search Engine Features  
+Supports advanced search capabilities:
+- Boolean search: AND, OR, NOT  
+- Phrase search: "exact phrase"  
+- Wildcard search: term*  
+- Fuzzy search: retrival~  
+- Multi-field search (name, description, content)  
+- Highlighted search results  
+- Pagination (5 results per page)
+
+ Filters  
+Users can filter results by:
+- Category  
+- File type  
+- Price range  
+- Date range (modification date)
+
+ Did You Mean?  
+Automatic suggestion when no results are found.  
+Uses Elasticsearch term suggestions.
+
+ Statistics Dashboard  
+The system provides analytics including:
+- Total indexed documents  
+- Breakdown by file type  
+- Breakdown by category  
+- Top 10 most frequent terms  
+
+ Data Processing Strategy  
+Each file type is converted into searchable documents as follows:
+- JSON → each object is treated as a document  
+- CSV → each row is treated as a document  
+- TXT → each file is treated as one document  
+- PDF → extracted text per file  
+- XLSX → each row in each sheet is indexed as a document  
+
+ Search Syntax Guide  
+
+- AND → phone AND samsung  
+- OR → apple OR samsung  
+- NOT → NOT refurbished  
+- Phrase → "wireless headphones"  
+- Wildcard → iph*  
+- Fuzzy → retrival~
 ## Getting Started
 
 ### Prerequisites
